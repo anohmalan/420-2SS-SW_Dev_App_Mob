@@ -1,0 +1,26 @@
+{
+  "name": "recipeasy",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@expo/vector-icons": "^15.0.2",
+    "@react-native-picker/picker": "2.11.4",
+    "expo": "~57.0.18",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-radio-buttons-group": "^3.1.0",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-simple-dialogs": "^3.0.1",
+    "react-native-web": "^0.21.2",
+    "toastify-react-native": "^7.2.3"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "private": true
+}
