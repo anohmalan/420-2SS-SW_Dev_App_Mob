@@ -1,45 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View,TouchableHighlight } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import RadioGroup from 'react-native-radio-buttons-group';
+import {RadioGroup} from 'react-native-radio-buttons-group';
 import { Picker } from '@react-native-picker/picker';
-
-
-function TextComponent({label, ...otherProps}) {
-  return (
-    <View >
-      <Text {...otherProps}>{label}</Text>
-    </View>
-  );
-}
-
-function InputRect({placeholder,style, ...otherProps}) {
-    return (
-        <TextInput
-            placeholder={placeholder}
-            style={[styles.input, style]}
-            {...otherProps}
-        />
-    )
-}
-
-function ButtonHighlight({label,styleText, styleButton}){
-  return(
-    <TouchableHighlight style={styleButton} activeOpacity={0.6}>
-
-      <TextComponent label={label} style={styleText}/>
-
-    </TouchableHighlight>
-  );
-
-}
-
-function TextInputComponent({placeholder, style, placeholderTextColor}){
-  return(
-    <TextInput placeholder={placeholder} style={style} placeholderTextColor={placeholderTextColor}/>
-  );
-}
+import { TextComponent } from './Components/TextComponent';
+import { InputRect } from './Components/InputRect';
+import { ButtonHighlight } from './Components/ButtonHighlight';
 
 
 function ScreenOne(){
@@ -69,26 +36,13 @@ function ScreenTwo(){
       <SafeAreaView style={styles.container}>
         <View style={[styles.body, {justifyContent: 'center', alignItems: 'center'}]}>
          
-          <TextInput
-            placeholder='Username'
-            placeholderTextColor="#FFFFFF"
-            style={[styles.input]}
-          />
-          <TextInput
-            placeholder='Password'
-            placeholderTextColor="#FFFFFF"            
-            style={[styles.input]}
-          />
-          <TextInput
-            placeholder='Password confirmation'
-            placeholderTextColor="#FFFFFF"            
-            style={[styles.input]}
-          />
-          <TouchableHighlight 
-            style={styles.bouton}
-            activeOpacity={0.6}>
-            <TextComponent label={"Create my account"} style={{color: "#FFFFFF", fontSize: 16, fontWeight: 'bold'}}/>
-          </TouchableHighlight>
+          <InputRect placeholder='Username'placeholderTextColor="#FFFFFF" />
+
+          <InputRect placeholder='Password'placeholderTextColor="#FFFFFF" />
+
+          <InputRect placeholder='Password confirmation'placeholderTextColor="#FFFFFF" />
+
+          <ButtonHighlight label={"Create my account"} styleButton={styles.bouton} styleText={styles.textComponent}/>
 
         </View>
 
@@ -128,20 +82,17 @@ function ScreenThree(){
         <View style={[styles.body, {alignItems:'center'}]}>
 
           <View style={{alignItems: 'center'}}>
-            <RadioGroup radioButtons={ options } onPress={setSelectedId} selectedId={selectedId} layout='row' labelStyle={{color: '#FFFFFF'}} />
+            <RadioGroup radioButtons={ options } 
+              onPress={setSelectedId} selectedId={selectedId}
+              layout='row' labelStyle={{color: '#FFFFFF'}} 
+            />
           </View>
 
-            <TextInput
-              placeholder='Name'
-              placeholderTextColor="#FFFFFF"
-              style={[styles.input, {width: '100%'}]}
-            />
+          <InputRect placeholder="Name" placeholderTextColor="#FFFFFF" style={{width: '100%'}}/>
       
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
 
-            <View>
-              <Text style={{color: '#FFFFFF'}}>Duration </Text>
-            </View>
+            <TextComponent label="Duration" style={{color: '#FFFFFF'}}/>
 
             <View style={{ flex: 1 }}>
               <Picker style={{color: '#FFFFFF'}} dropdownIconColor="#FFFFFF">
@@ -149,7 +100,7 @@ function ScreenThree(){
                   <Picker.Item 
                     key={index}
                     label={`${index}h`}
-                    value={index.toString()}
+                    value={index}
                   />
                 ))}
               </Picker>
@@ -165,7 +116,7 @@ function ScreenThree(){
                   <Picker.Item
                     key={index}
                     label={`${index}m`}
-                    value={index.toString()}
+                    value={index}
                   />
                 ))}
               </Picker>
@@ -173,17 +124,9 @@ function ScreenThree(){
           
           </View>
 
-           <TextInput
-                style={[styles.input, { width: '100%', height: '55%', verticalAlign: 'top' }]}
-                placeholder='Description'
-                placeholderTextColor="#FFFFFF"
-                multiline={ true }
-              />
-          <TouchableHighlight 
-            style={[styles.bouton, {width:"50%"}]}
-            activeOpacity={0.6}>
-            <TextComponent label={"Save"} style={{color: "#FFFFFF", fontSize: 16, fontWeight: 'bold'}}/>
-          </TouchableHighlight>
+          <InputRect  placeholder='Description' placeholderTextColor="#FFFFFF" style={styles.descripInput} multiline={ true }/>
+
+          <ButtonHighlight label="Save" styleButton={[styles.bouton, {width:"50%"}]} styleText={styles.textComponent}/>
 
         </View>
 
@@ -192,7 +135,7 @@ function ScreenThree(){
   );
 }
 export default function App() {
-  const SCREEN = 2;
+  const SCREEN = 1;
   <StatusBar style="auto" />
   switch (SCREEN) {
     case 1:
@@ -227,6 +170,11 @@ const styles = StyleSheet.create({
     color:"#FFFFFF",
     height: '6%' , 
     width: '70%'
+  },
+  descripInput:{
+    width: '100%', 
+    height: '55%', 
+    verticalAlign: 'top'
   },
 
   text: {
