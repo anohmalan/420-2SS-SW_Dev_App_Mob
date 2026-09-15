@@ -6,7 +6,8 @@ import { Picker } from '@react-native-picker/picker';
 import { TextComponent } from '../components/TextComponent';
 import { InputRect } from "../components/InputRect";
 import { ButtonHighlight } from "../components/ButtonHighlight";
-import { GlobalStyles } from "./styles/globalStyle";
+import { GlobalStyles } from "./styles/globalStyles";
+import { RecipeStyles } from './styles/recipeScreenStyles';
 
 export default function RecipeScreen(){
       const options = [
@@ -81,7 +82,7 @@ export default function RecipeScreen(){
           
           </View>
 
-          <InputRect  placeholder='Description' placeholderTextColor="#FFFFFF" style={GlobalStyles.descripInput} multiline={ true }/>
+          <InputRect  placeholder='Description' placeholderTextColor="#FFFFFF" style={RecipeStyles.descripInput} multiline={ true }/>
 
           <ButtonHighlight label="Save" styleButton={[GlobalStyles.bouton, {width:"50%"}]} styleText={GlobalStyles.textComponent}/>
 

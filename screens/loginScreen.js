@@ -2,7 +2,8 @@ import { View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { InputRect } from "../components/InputRect";
 import { ButtonHighlight } from "../components/ButtonHighlight";
-import { GlobalStyles } from "./styles/globalStyle";
+import { GlobalStyles } from "./styles/globalStyles";
+import { LoginStyles } from './styles/loginScreenStyles';
 
 
 export default function LoginScren({ navigation }){
