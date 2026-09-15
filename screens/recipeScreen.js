@@ -1,7 +1,7 @@
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { RadioGroup } from 'react-native-radio-buttons-group';
+import RadioGroup from 'react-native-radio-buttons-group';
 import { Picker } from '@react-native-picker/picker';
 import { TextComponent } from '../components/TextComponent';
 import { InputRect } from "../components/InputRect";
@@ -33,7 +33,7 @@ export default function RecipeScreen(){
     const [selectedId, setSelectedId] = useState();
 
     const HOUR_COUNT = 24;
-    const MINUTE_COUNT = 61;
+    const MINUTE_COUNT = 60;
  return (
     <SafeAreaProvider>
       <SafeAreaView style={GlobalStyles.container}>
