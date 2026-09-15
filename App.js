@@ -4,9 +4,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import {RadioGroup} from 'react-native-radio-buttons-group';
 import { Picker } from '@react-native-picker/picker';
-import { TextComponent } from './Components/TextComponent';
-import { InputRect } from './Components/InputRect';
-import { ButtonHighlight } from './Components/ButtonHighlight';
+import { TextComponent } from './components/TextComponent';
+import { InputRect } from './components/InputRect';
+import { ButtonHighlight } from './components/ButtonHighlight';
 
 
 function ScreenOne(){
@@ -19,9 +19,9 @@ function ScreenOne(){
 
           <InputRect placeholder='Password'placeholderTextColor="#FFFFFF" />
 
-          <ButtonHighlight label={"Login"} styleButton={styles.bouton} styleText={styles.textComponent}/>
+          <ButtonHighlight label={"Login"} styleText={styles.textComponent}/>
 
-          <ButtonHighlight label={"Sign up!"} styleText={{color: "#4a32c1"}}/>
+          <ButtonHighlight label={"Sign up!"} styleText={{color: "#4a32c1"}} styleButton={{backgroundColor: "transparent"}}/>
 
         </View>
 
@@ -42,7 +42,7 @@ function ScreenTwo(){
 
           <InputRect placeholder='Password confirmation'placeholderTextColor="#FFFFFF" />
 
-          <ButtonHighlight label={"Create my account"} styleButton={styles.bouton} styleText={styles.textComponent}/>
+          <ButtonHighlight label={"Create my account"} styleText={styles.textComponent}/>
 
         </View>
 
