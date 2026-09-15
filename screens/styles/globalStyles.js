@@ -9,13 +9,7 @@ export const GlobalStyles = StyleSheet.create({
     justifyContent: 'center',
     height: 'auto',
     gap: "5%",
-    padding: 5
-  },
-  body: {
-    flex: 1,
-    height: 'auto',
-    gap: "5%",
-    padding: 5
+    padding: 20
   },
   input: {
     borderWidth: 1,

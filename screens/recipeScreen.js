@@ -10,30 +10,18 @@ import { RecipeStyles } from './styles/recipeScreenStyles';
 import { colors } from '../theme';
 
 export default function RecipeScreen(){
-      const options = [
-        {
-            id: '1',
-            label: 'Breakfast',
-            value: '1',
-            color: '#FFFFFF'
-        },
-        {
-            id: '2',
-            label: 'Lunch',
-            value: '2',
-            color: '#FFFFFF'
-        },
-        {
-            id: '3',
-            label: 'Dinner',
-            value: '3',
-            color: '#FFFFFF'
-        }
-    ];
-    const [selectedId, setSelectedId] = useState();
 
-    const HOUR_COUNT = 24;
-    const MINUTE_COUNT = 60;
+  const meals = ['Breakfast', 'Lunch', 'Dinner'];
+  const options = meals.map((meal, index) => ({
+    id: String(index + 1),
+    label: meal,
+    value: String(index + 1),
+    color: colors.second
+  }));
+
+  const [selectedId, setSelectedId] = useState();
+  const HOUR_COUNT = 24;
+  const MINUTE_COUNT = 60;
  return (
     <View style={[GlobalStyles.container, RecipeStyles.container]}>
 

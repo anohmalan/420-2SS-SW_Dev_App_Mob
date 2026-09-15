@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const RecipeStyles = StyleSheet.create({
   container:{
-    alignItems:'center'
+    alignItems:'center',
   },
   radContainer:{
     alignItems: 'center'
