@@ -3,11 +3,12 @@ import { useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { RadioGroup } from 'react-native-radio-buttons-group';
 import { Picker } from '@react-native-picker/picker';
-import { TextComponent } from './components/TextComponent';
+import { TextComponent } from '../components/TextComponent';
 import { InputRect } from "../components/InputRect";
 import { ButtonHighlight } from "../components/ButtonHighlight";
+import { GlobalStyles } from "./styles/globalStyle";
 
-export default function ScreenThree(){
+export default function RecipeScreen(){
       const options = [
         {
             id: '1',
@@ -34,8 +35,8 @@ export default function ScreenThree(){
     const MINUTE_COUNT = 61;
  return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <View style={[styles.body, {alignItems:'center'}]}>
+      <SafeAreaView style={GlobalStyles.container}>
+        <View style={[GlobalStyles.body, {alignItems:'center'}]}>
 
           <View style={{alignItems: 'center'}}>
             <RadioGroup radioButtons={ options } 
@@ -80,9 +81,9 @@ export default function ScreenThree(){
           
           </View>
 
-          <InputRect  placeholder='Description' placeholderTextColor="#FFFFFF" style={styles.descripInput} multiline={ true }/>
+          <InputRect  placeholder='Description' placeholderTextColor="#FFFFFF" style={GlobalStyles.descripInput} multiline={ true }/>
 
-          <ButtonHighlight label="Save" styleButton={[styles.bouton, {width:"50%"}]} styleText={styles.textComponent}/>
+          <ButtonHighlight label="Save" styleButton={[GlobalStyles.bouton, {width:"50%"}]} styleText={GlobalStyles.textComponent}/>
 
         </View>
 

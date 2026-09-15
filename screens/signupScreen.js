@@ -2,12 +2,13 @@ import { View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { InputRect } from "../components/InputRect";
 import { ButtonHighlight } from "../components/ButtonHighlight";
+import { GlobalStyles } from './styles/globalStyle';
 
 export default function SignupScreen(){
  return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <View style={[styles.body, {justifyContent: 'center', alignItems: 'center'}]}>
+      <SafeAreaView style={GlobalStyles.container}>
+        <View style={[GlobalStyles.body, {justifyContent: 'center', alignItems: 'center'}]}>
          
           <InputRect placeholder='Username'placeholderTextColor="#FFFFFF" />
 
@@ -15,7 +16,7 @@ export default function SignupScreen(){
 
           <InputRect placeholder='Password confirmation'placeholderTextColor="#FFFFFF" />
 
-          <ButtonHighlight label={"Create my account"} styleText={styles.textComponent}/>
+          <ButtonHighlight label={"Create my account"} styleText={GlobalStyles.textComponent}/>
 
         </View>
 
