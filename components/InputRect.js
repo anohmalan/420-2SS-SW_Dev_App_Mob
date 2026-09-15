@@ -1,4 +1,5 @@
 import {TextInput, StyleSheet} from 'react-native';
+import { colors } from '../theme';
 
 export function InputRect({placeholder,style, ...otherProps}) {
     return (
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'lightgray',
     padding: 8,
-    color:"#FFFFFF",
+    color: colors.second,
     height: '6%' , 
     width: '70%'
   }

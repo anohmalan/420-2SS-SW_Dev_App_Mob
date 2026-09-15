@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { colors, fontSizes } from "../../theme";
 
 export const GlobalStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#387E7F',
+    backgroundColor: colors.accent,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -18,7 +19,7 @@ export const GlobalStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'lightgray',
     padding: 8,
-    color:"#FFFFFF",
+    color: colors.second,
     height: '6%' , 
     width: '70%'
   },
@@ -29,10 +30,10 @@ export const GlobalStyles = StyleSheet.create({
   },
 
   text: {
-    fontSize: 18,
+    fontSize: fontSizes.ml,
   },
   bouton:{
-    backgroundColor: "#F2A93B", 
+    backgroundColor: colors.buttonPrimary, 
     width: "auto",
     padding: 10,
     alignItems: 'center', 
@@ -40,5 +41,5 @@ export const GlobalStyles = StyleSheet.create({
     justifyContent: "center", 
     borderRadius: 3
   },
-  textComponent: {color: "#FFFFFF", fontSize: 16, fontWeight: 'bold'}
+  textComponent: {color: colors.textWhite, fontSize: fontSizes.md, fontWeight: 'bold'}
 });

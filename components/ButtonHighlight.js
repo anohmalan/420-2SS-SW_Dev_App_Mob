@@ -1,5 +1,6 @@
 import {TouchableHighlight, StyleSheet} from 'react-native';
 import { TextComponent } from './TextComponent';
+import { colors } from '../theme';
 
 export function ButtonHighlight({label,styleText, styleButton}){
   return(
@@ -13,7 +14,7 @@ export function ButtonHighlight({label,styleText, styleButton}){
 
 const styles = StyleSheet.create({
     button:{
-    backgroundColor: "#F2A93B", 
+    backgroundColor: colors.buttonPrimary, 
     width: "auto",
     padding: 10,
     alignItems: 'center', 

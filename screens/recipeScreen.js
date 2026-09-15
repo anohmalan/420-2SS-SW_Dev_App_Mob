@@ -8,6 +8,7 @@ import { InputRect } from "../components/InputRect";
 import { ButtonHighlight } from "../components/ButtonHighlight";
 import { GlobalStyles } from "./styles/globalStyles";
 import { RecipeStyles } from './styles/recipeScreenStyles';
+import { colors } from '../theme';
 
 export default function RecipeScreen(){
       const options = [
@@ -42,18 +43,18 @@ export default function RecipeScreen(){
           <View style={{alignItems: 'center'}}>
             <RadioGroup radioButtons={ options } 
               onPress={setSelectedId} selectedId={selectedId}
-              layout='row' labelStyle={{color: '#FFFFFF'}} 
+              layout='row' labelStyle={{color: colors.second}} 
             />
           </View>
 
-          <InputRect placeholder="Name" placeholderTextColor="#FFFFFF" style={{width: '100%'}}/>
+          <InputRect placeholder="Name" placeholderTextColor={colors.textWhite} style={{width: '100%'}}/>
       
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
 
-            <TextComponent label="Duration" style={{color: '#FFFFFF'}}/>
+            <TextComponent label="Duration" style={{color: colors.second}}/>
 
             <View style={{ flex: 1 }}>
-              <Picker style={{color: '#FFFFFF'}} dropdownIconColor="#FFFFFF">
+              <Picker style={{color: colors.second}} dropdownIconColor={colors.second}>
                 {Array.from({ length: HOUR_COUNT }, (_, index) => (
                   <Picker.Item 
                     key={index}
@@ -65,11 +66,11 @@ export default function RecipeScreen(){
             </View>
             
             <View>
-              <Text style={{color: '#FFFFFF'}}>: </Text>
+              <Text style={{color: colors.second}}>: </Text>
             </View>
 
             <View style={{ flex: 1 }}>
-              <Picker style={{color: '#FFFFFF'}} dropdownIconColor="#FFFFFF" pickerStyleType="yes">
+              <Picker style={{color: colors.second}} dropdownIconColor={colors.second} pickerStyleType="yes">
                 {Array.from({ length: MINUTE_COUNT }, (_, index) => (
                   <Picker.Item
                     key={index}
@@ -82,7 +83,7 @@ export default function RecipeScreen(){
           
           </View>
 
-          <InputRect  placeholder='Description' placeholderTextColor="#FFFFFF" style={RecipeStyles.descripInput} multiline={ true }/>
+          <InputRect  placeholder='Description' placeholderTextColor={colors.textWhite} style={RecipeStyles.descripInput} multiline={ true }/>
 
           <ButtonHighlight label="Save" styleButton={[GlobalStyles.bouton, {width:"50%"}]} styleText={GlobalStyles.textComponent}/>
 

@@ -4,6 +4,7 @@ import { InputRect } from "../components/InputRect";
 import { ButtonHighlight } from "../components/ButtonHighlight";
 import { GlobalStyles } from './styles/globalStyles';
 import { SignupStyles } from './styles/signupScreenStyles';
+import { colors } from '../theme';
 
 export default function SignupScreen(){
  return (
@@ -11,11 +12,11 @@ export default function SignupScreen(){
       <SafeAreaView style={GlobalStyles.container}>
         <View style={[GlobalStyles.body, {justifyContent: 'center', alignItems: 'center'}]}>
          
-          <InputRect placeholder='Username'placeholderTextColor="#FFFFFF" />
+          <InputRect placeholder='Username'placeholderTextColor={colors.textWhite} />
 
-          <InputRect placeholder='Password'placeholderTextColor="#FFFFFF" />
+          <InputRect placeholder='Password'placeholderTextColor={colors.textWhite} />
 
-          <InputRect placeholder='Password confirmation'placeholderTextColor="#FFFFFF" />
+          <InputRect placeholder='Password confirmation'placeholderTextColor={colors.textWhite} />
 
           <ButtonHighlight label={"Create my account"} styleText={GlobalStyles.textComponent}/>
 

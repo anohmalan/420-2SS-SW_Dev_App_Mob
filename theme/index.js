@@ -3,7 +3,8 @@ export const colors = {
   second: "#FFFFFF",
   buttonPrimary: "#F2A93B",
   textDark: "#000000",
-  textWhite: "#FFFFFF"
+  textWhite: "#FFFFFF",
+  move: "#4a32c1"
 }
 
 export const spacings = {
@@ -12,8 +13,9 @@ export const spacings = {
   xs: 4,
   xxs: 6,
   sm: 8,
-  md2: 12,
+  sl: 12,
   md: 16,
+  ml: 18,
   lg: 20,
   xl: 24,
   xxl: 32,
