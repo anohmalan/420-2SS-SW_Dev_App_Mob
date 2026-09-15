@@ -7,10 +7,12 @@ export const GlobalStyles = StyleSheet.create({
     backgroundColor: colors.accent,
     alignItems: 'center',
     justifyContent: 'center',
+    height: 'auto',
+    gap: "5%",
+    padding: 5
   },
   body: {
     flex: 1,
-    width:'90%',
     height: 'auto',
     gap: "5%",
     padding: 5

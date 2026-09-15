@@ -1,6 +1,5 @@
 import { View, Text } from 'react-native';
 import { useState } from 'react';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import RadioGroup from 'react-native-radio-buttons-group';
 import { Picker } from '@react-native-picker/picker';
 import { TextComponent } from '../components/TextComponent';
@@ -36,60 +35,55 @@ export default function RecipeScreen(){
     const HOUR_COUNT = 24;
     const MINUTE_COUNT = 60;
  return (
-    <SafeAreaProvider>
-      <SafeAreaView style={GlobalStyles.container}>
-        <View style={[GlobalStyles.body, RecipeStyles.container]}>
+    <View style={[GlobalStyles.container, RecipeStyles.container]}>
 
-          <View style={RecipeStyles.radContainer}>
-            <RadioGroup radioButtons={ options } 
-              onPress={setSelectedId} selectedId={selectedId}
-              layout='row' labelStyle={{color: colors.second}} 
-            />
-          </View>
+      <View style={RecipeStyles.radContainer}>
+        <RadioGroup radioButtons={ options } 
+          onPress={setSelectedId} selectedId={selectedId}
+          layout='row' labelStyle={{color: colors.second}} 
+        />
+      </View>
 
-          <InputRect placeholder="Name" style={{width: '100%'}}/>
-      
-          <View style={RecipeStyles.durationContainer}>
+      <InputRect placeholder="Name" style={{width: '100%'}}/>
+  
+      <View style={RecipeStyles.durationContainer}>
 
-            <TextComponent label="Duration" style={{color: colors.second}}/>
+        <TextComponent label="Duration" style={{color: colors.second}}/>
 
-            <View style={{ flex: 1 }}>
-              <Picker style={{color: colors.second}} dropdownIconColor={colors.second}>
-                {Array.from({ length: HOUR_COUNT }, (_, index) => (
-                  <Picker.Item 
-                    key={index}
-                    label={`${index}h`}
-                    value={index}
-                  />
-                ))}
-              </Picker>
-            </View>
-            
-            <View>
-              <Text style={{color: colors.second}}>: </Text>
-            </View>
-
-            <View style={{ flex: 1 }}>
-              <Picker style={{color: colors.second}} dropdownIconColor={colors.second} pickerStyleType="yes">
-                {Array.from({ length: MINUTE_COUNT }, (_, index) => (
-                  <Picker.Item
-                    key={index}
-                    label={`${index}m`}
-                    value={index}
-                  />
-                ))}
-              </Picker>
-            </View>
-          
-          </View>
-
-          <InputRect  placeholder='Description' style={RecipeStyles.descripInput} multiline={ true }/>
-
-          <ButtonHighlight label="Save" styleButton={[GlobalStyles.bouton, {width:"50%"}]} styleText={GlobalStyles.textComponent}/>
-
+        <View style={{ flex: 1 }}>
+          <Picker style={{color: colors.second}} dropdownIconColor={colors.second}>
+            {Array.from({ length: HOUR_COUNT }, (_, index) => (
+              <Picker.Item 
+                key={index}
+                label={`${index}h`}
+                value={index}
+              />
+            ))}
+          </Picker>
+        </View>
+        
+        <View>
+          <Text style={{color: colors.second}}>: </Text>
         </View>
 
-      </SafeAreaView>
-    </SafeAreaProvider>
+        <View style={{ flex: 1 }}>
+          <Picker style={{color: colors.second}} dropdownIconColor={colors.second} pickerStyleType="yes">
+            {Array.from({ length: MINUTE_COUNT }, (_, index) => (
+              <Picker.Item
+                key={index}
+                label={`${index}m`}
+                value={index}
+              />
+            ))}
+          </Picker>
+        </View>
+      
+      </View>
+
+      <InputRect  placeholder='Description' style={RecipeStyles.descripInput} multiline={ true }/>
+
+      <ButtonHighlight label="Save" styleButton={[GlobalStyles.bouton, {width:"50%"}]} styleText={GlobalStyles.textComponent}/>
+
+    </View>
   );
 }
