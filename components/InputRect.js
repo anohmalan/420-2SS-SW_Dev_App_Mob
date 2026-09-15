@@ -6,6 +6,7 @@ export function InputRect({placeholder,style, ...otherProps}) {
         <TextInput
             placeholder={placeholder}
             style={[styles.input, style]}
+            placeholderTextColor={colors.textWhite}
             {...otherProps}
         />
     )

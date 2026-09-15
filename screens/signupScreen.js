@@ -12,11 +12,11 @@ export default function SignupScreen(){
       <SafeAreaView style={GlobalStyles.container}>
         <View style={[GlobalStyles.body, {justifyContent: 'center', alignItems: 'center'}]}>
          
-          <InputRect placeholder='Username'placeholderTextColor={colors.textWhite} />
+          <InputRect placeholder='Username'/>
 
-          <InputRect placeholder='Password'placeholderTextColor={colors.textWhite} />
+          <InputRect placeholder='Password'/>
 
-          <InputRect placeholder='Password confirmation'placeholderTextColor={colors.textWhite} />
+          <InputRect placeholder='Password confirmation'/>
 
           <ButtonHighlight label={"Create my account"} styleText={GlobalStyles.textComponent}/>
 

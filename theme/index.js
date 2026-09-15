@@ -4,7 +4,8 @@ export const colors = {
   buttonPrimary: "#F2A93B",
   textDark: "#000000",
   textWhite: "#FFFFFF",
-  move: "#4a32c1"
+  move: "#4a32c1",
+  transp: "transparent"
 }
 
 export const spacings = {

@@ -38,18 +38,18 @@ export default function RecipeScreen(){
  return (
     <SafeAreaProvider>
       <SafeAreaView style={GlobalStyles.container}>
-        <View style={[GlobalStyles.body, {alignItems:'center'}]}>
+        <View style={[GlobalStyles.body, RecipeStyles.container]}>
 
-          <View style={{alignItems: 'center'}}>
+          <View style={RecipeStyles.radContainer}>
             <RadioGroup radioButtons={ options } 
               onPress={setSelectedId} selectedId={selectedId}
               layout='row' labelStyle={{color: colors.second}} 
             />
           </View>
 
-          <InputRect placeholder="Name" placeholderTextColor={colors.textWhite} style={{width: '100%'}}/>
+          <InputRect placeholder="Name" style={{width: '100%'}}/>
       
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={RecipeStyles.durationContainer}>
 
             <TextComponent label="Duration" style={{color: colors.second}}/>
 
@@ -83,7 +83,7 @@ export default function RecipeScreen(){
           
           </View>
 
-          <InputRect  placeholder='Description' placeholderTextColor={colors.textWhite} style={RecipeStyles.descripInput} multiline={ true }/>
+          <InputRect  placeholder='Description' style={RecipeStyles.descripInput} multiline={ true }/>
 
           <ButtonHighlight label="Save" styleButton={[GlobalStyles.bouton, {width:"50%"}]} styleText={GlobalStyles.textComponent}/>
 
