@@ -3,24 +3,35 @@ import { ButtonHighlight } from "../components/buttonHighlight";
 import { GlobalStyles } from "./styles/globalStyles";
 import { RecipesStyles } from './styles/recipesScreenStyles';
 import { colors } from '../theme';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import ToastManager, { Toast } from 'toastify-react-native'
 import { useState } from 'react';
 
 function RecipeItem({recipe, ...otherProps}){
+  const ICON = ["cafe-outline",]
   console.log("ok");
-  console.log(recipe);
+  console.log(recipe.category);
   return(
     console.log("hummc"),
     <TouchableHighlight >
 
-        <View style={{alignItems: 'flex-start', height: 'auto',borderWidth:2, borderColor: 'red',justifyContent:'flex-start'}}>
-                <Text style={[styles.text, { fontWeight: 'bold' }]}>{ recipe.name }</Text>
-                {
-                  !!recipe.description &&
-                    <Text style={ styles.text }>{ recipe.description }</Text>
-                }
+        <View style={{flexDirection: 'row', }}>
+          <View style={{alignItems: 'center', marginRight: 15, width: 60}}>
+            <Ionicons name="checkmark-circle" size={22} color= {colors.buttonPrimary} />
+            <View >
+              <Text style={{color: colors.textWhite, }}>{recipe.durationHours}h{recipe.durationMinutes}</Text>
             </View>
+          </View>
+
+          <View style={{height: 'auto'}}>
+            <Text style={{ fontWeight: 'bold', flex: 1, verticalAlign: 'bottom', color: colors.textWhite, fontSize: 16}}>{ recipe.name }</Text>
+            {
+              !!recipe.description &&
+                <Text style={ styles.text }>{ recipe.description }</Text>
+            }
+          </View>
+          
+        </View>
      
   </TouchableHighlight>
   );
@@ -33,12 +44,12 @@ export default function RecipesScreen({ navigation }){
   const SEED = [...Array(SEED_COUNT).keys()].map((item, index, array) => {
     const name = `A ${item}`
     return {
-      category: parseInt(Math.random()*6),
+      category: parseInt(Math.random()*5 + 1),
       id: parseInt(Math.random(1)*10000),
       name: name,
       durationHours: parseInt(Math.random()*25),
       durationMinutes: parseInt(Math.random()*60),
-      description: `${name} `.repeat(index),
+      description: `${name} `.repeat(8),
     }
   })
 
@@ -65,9 +76,9 @@ export default function RecipesScreen({ navigation }){
     <ScrollView style={{ flex: 1 }}>
       {recipes.map((recipe) => {
         return (
-          <View style={[GlobalStyles.container,{ width: "100%", display: 'flex',borderWidth:2, borderColor: 'orange', alignItems: 'flex-start'}]}>
+          <View style={[GlobalStyles.container,{ width: "100%", padding: 10,gap:10, alignItems: 'flex-start'}]}>
             <RecipeItem recipe={recipe}/>
-          <View style={{height: 2, width: "100%", backgroundColor: '#000000'}}></View>
+            <View style={{height: 2, width: "100%", backgroundColor: colors.textWhite}}></View>
           </View>
           
         );
@@ -118,6 +129,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   text: {
-    fontSize: 18,
+    fontSize: 15,
+    color: colors.textWhite
   },
 });
