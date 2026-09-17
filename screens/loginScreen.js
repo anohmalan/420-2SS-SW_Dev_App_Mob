@@ -11,7 +11,7 @@ export default function LoginScren({ navigation }){
 
   function handleLogin(){
     return(     
-      console.log("Pressé") , navigation.replace('RecipesScreen')     
+      console.log(parseInt(Math.random()*10000)) //, navigation.replace('RecipesScreen')     
     );
 
   }
