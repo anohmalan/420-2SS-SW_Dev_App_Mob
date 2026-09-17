@@ -1,4 +1,4 @@
-import { View, TouchableHighlight } from 'react-native';
+import { View, TouchableHighlight, ScrollView, StyleSheet, Text } from 'react-native';
 import { ButtonHighlight } from "../components/buttonHighlight";
 import { GlobalStyles } from "./styles/globalStyles";
 import { RecipesStyles } from './styles/recipesScreenStyles';
@@ -6,6 +6,26 @@ import { colors } from '../theme';
 import { Ionicons } from '@expo/vector-icons';
 import ToastManager, { Toast } from 'toastify-react-native'
 import { useState } from 'react';
+
+function RecipeItem({recipe, ...otherProps}){
+  console.log("ok");
+  console.log(recipe);
+  return(
+    console.log("hummc"),
+    <TouchableHighlight >
+
+        <View style={{alignItems: 'flex-start', height: 'auto',borderWidth:2, borderColor: 'red',justifyContent:'flex-start'}}>
+                <Text style={[styles.text, { fontWeight: 'bold' }]}>{ recipe.name }</Text>
+                {
+                  !!recipe.description &&
+                    <Text style={ styles.text }>{ recipe.description }</Text>
+                }
+            </View>
+     
+  </TouchableHighlight>
+  );
+
+}
 
 export default function RecipesScreen({ navigation }){
 
@@ -18,21 +38,50 @@ export default function RecipesScreen({ navigation }){
       name: name,
       durationHours: parseInt(Math.random()*25),
       durationMinutes: parseInt(Math.random()*60),
-      description: `Description ${name} `.repeat(index),
+      description: `${name} `.repeat(index),
     }
   })
 
   const [recipes, setRecipes] = useState(SEED);
 
-  function list(){
-    if(recipes.length == 0){
-      return (
-        <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ fontSize: 48, color: 'gray' }}>No todos...</Text>
-        </View>
-      )
-    }
+  function list() {
+  if (recipes.length === 0) {
+    return (
+      <View
+        style={{
+          flexGrow: 1,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Text style={{ fontSize: 48, color: 'gray' }}>
+          No recipes...
+        </Text>
+      </View>
+    );
   }
+
+  return (
+    <ScrollView style={{ flex: 1 }}>
+      {recipes.map((recipe) => {
+        return (
+          <View style={[GlobalStyles.container,{ width: "100%", display: 'flex',borderWidth:2, borderColor: 'orange', alignItems: 'flex-start'}]}>
+            <RecipeItem recipe={recipe}/>
+          <View style={{height: 2, width: "100%", backgroundColor: '#000000'}}></View>
+          </View>
+          
+        );
+      })}
+    </ScrollView>
+  );
+}
+
+  return(
+
+    list()
+    
+  );
+  
 
   // const recipes = [
   //   { name: "Poutine",
@@ -52,10 +101,23 @@ export default function RecipesScreen({ navigation }){
   //   durationMinutes: recipe.durationMinutes,
   //   description: recipe.description
   // }));
-  <TouchableHighlight>
-    <View>
 
-    </View>
-  </TouchableHighlight>
 
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    gap: 16,
+    justifyContent: 'center',
+    padding: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: 'lightgray',
+    padding: 8,
+  },
+  text: {
+    fontSize: 18,
+  },
+});
