@@ -1,15 +1,15 @@
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { useState } from 'react';
 import RadioGroup from 'react-native-radio-buttons-group';
-import { TextComponent } from '../components/TextComponent';
-import { InputRect } from "../components/InputRect";
-import { ButtonHighlight } from "../components/ButtonHighlight";
+import { TextComponent } from '../components/textComponent';
+import { InputRect } from "../components/inputRect";
+import { ButtonHighlight } from "../components/buttonHighlight";
 import { GlobalStyles } from "./styles/globalStyles";
 import { RecipeStyles } from './styles/recipeScreenStyles';
-import { PickerGenerator } from '../components/PickerGenerator';
+import { PickerGenerator } from '../components/pickerGenerator';
 import { colors } from '../theme';
 
-export default function RecipeScreen(){
+export default function RecipeScreen({ navigation }){
 
   const meals = ['Breakfast', 'Lunch', 'Dinner'];
   const options = meals.map((meal, index) => ({

@@ -1,10 +1,10 @@
 import {TouchableHighlight, StyleSheet} from 'react-native';
-import { TextComponent } from './TextComponent';
+import { TextComponent } from './textComponent';
 import { colors } from '../theme';
 
-export function ButtonHighlight({label,styleText, styleButton}){
+export function ButtonHighlight({label,styleText, styleButton, ...otherProps}){
   return(
-    <TouchableHighlight style={[styles.button, styleButton]} activeOpacity={0.6}>
+    <TouchableHighlight style={[styles.button, styleButton]} activeOpacity={0.6} {...otherProps}>
 
       <TextComponent label={label} style={styleText}/>
 
