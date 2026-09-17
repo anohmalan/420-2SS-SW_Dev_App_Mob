@@ -9,6 +9,48 @@ import { GlobalStyles } from "./styles/globalStyles";
 import { RecipeStyles } from './styles/recipeScreenStyles';
 import { colors } from '../theme';
 
+function PickerGenerator({ ITEM_OPTIONS }) {
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        flex: 1,
+      }}
+    >
+      {ITEM_OPTIONS.map((option, index) => (
+        <View
+          key={index}
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <Picker
+              style={{ color: colors.second }}
+              dropdownIconColor={colors.second}
+            >
+              {[...Array(option.value).keys()].map((item) => (
+                <Picker.Item
+                  key={item}
+                  label={`${item}${option.label}`}
+                  value={item}
+                />
+              ))}
+            </Picker>
+          </View>
+
+          {index < ITEM_OPTIONS.length - 1 && (
+            <Text style={{ color: colors.second }}>:</Text>
+          )}
+        </View>
+      ))}
+    </View>
+  );
+}
+
 export default function RecipeScreen(){
 
   const meals = ['Breakfast', 'Lunch', 'Dinner'];
@@ -20,8 +62,18 @@ export default function RecipeScreen(){
   }));
 
   const [selectedId, setSelectedId] = useState();
-  const HOUR_COUNT = 24;
-  const MINUTE_COUNT = 60;
+
+  const PICKER_OPTIONS = [
+    {
+      label: 'h',
+      value: 24
+    },
+    {
+      label: 'm',
+      value: 60
+    }
+  ];
+
  return (
     <View style={[GlobalStyles.container, RecipeStyles.container]}>
 
@@ -39,31 +91,7 @@ export default function RecipeScreen(){
         <TextComponent label="Duration" style={{color: colors.second}}/>
 
         <View style={{ flex: 1 }}>
-          <Picker style={{color: colors.second}} dropdownIconColor={colors.second}>
-            {Array.from({ length: HOUR_COUNT }, (_, index) => (
-              <Picker.Item 
-                key={index}
-                label={`${index}h`}
-                value={index}
-              />
-            ))}
-          </Picker>
-        </View>
-        
-        <View>
-          <Text style={{color: colors.second}}>: </Text>
-        </View>
-
-        <View style={{ flex: 1 }}>
-          <Picker style={{color: colors.second}} dropdownIconColor={colors.second} pickerStyleType="yes">
-            {Array.from({ length: MINUTE_COUNT }, (_, index) => (
-              <Picker.Item
-                key={index}
-                label={`${index}m`}
-                value={index}
-              />
-            ))}
-          </Picker>
+          <PickerGenerator ITEM_OPTIONS = {PICKER_OPTIONS}/>
         </View>
       
       </View>
