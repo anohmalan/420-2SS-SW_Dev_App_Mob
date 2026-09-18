@@ -12,10 +12,11 @@ import { colors } from '../theme';
 export default function RecipeScreen({ navigation }){
 
   const meals = ['Breakfast', 'Lunch', 'Dinner'];
+  const icon_meals = ["free-breakfast",'dinner-dining','lunch-dining'];
   const options = meals.map((meal, index) => ({
     id: String(index + 1),
     label: meal,
-    value: String(index + 1),
+    value: String(icon_meals.index + 1),
     color: colors.second
   }));
 
