@@ -9,19 +9,35 @@ import { RecipeStyles } from './styles/recipeScreenStyles';
 import { PickerGenerator } from '../components/pickerGenerator';
 import { colors } from '../theme';
 
-export default function RecipeScreen({ navigation }){
+export default function RecipeScreen({ navigation, route }){
+  const params = route.params
+  const recipe = params.recipe
+  const categories = [
+    {
+      value: "1",
+      label:'Breakfast', 
+      icon: 'free-breakfast'
+    },
+    {
+      value: "2",
+      label:'Lunch', 
+      icon: 'lunch-dining'
+    },
+    {
+      value: "3",
+      label:'Dinner', 
+      icon: 'dinner-dining'
+    }];
 
-  const meals = ['Breakfast', 'Lunch', 'Dinner'];
-  const icon_meals = ["free-breakfast",'dinner-dining','lunch-dining'];
-  const options = meals.map((meal, index) => ({
+  const options = categories.map((meal, index) => ({
     id: String(index + 1),
-    label: meal,
-    value: String(icon_meals.index + 1),
+    label: meal.label,
+    value: meal.value,
     color: colors.second
   }));
 
-  const [selectedId, setSelectedId] = useState();
-
+  const [selectedId, setSelectedId] = useState(!!recipe.category && recipe.category);
+  console.log(selectedId)
   const PICKER_OPTIONS = [
     {
       label: 'h',
@@ -42,20 +58,20 @@ export default function RecipeScreen({ navigation }){
           layout='row' labelStyle={{color: colors.second}} 
         />
       </View>
-
-      <InputRect placeholder="Name" style={{width: '100%'}}/>
+      {console.log(recipe.name)}
+      <InputRect placeholder="Name" value={!!recipe.name && recipe.name} style={{width: '100%'}}/>
   
       <View style={RecipeStyles.durationContainer}>
 
         <TextComponent label="Duration" style={{color: colors.second}}/>
 
         <View style={{ flex: 1 }}>
-          <PickerGenerator ITEM_OPTIONS = {PICKER_OPTIONS}/>
+          <PickerGenerator ITEM_OPTIONS = {PICKER_OPTIONS} duration= {[recipe.durationHours, recipe.durationMinutes]}/>
         </View>
       
       </View>
 
-      <InputRect  placeholder='Description' style={RecipeStyles.descripInput} multiline={ true }/>
+      <InputRect  placeholder='Description' value= {!!recipe.description && recipe.description} style={RecipeStyles.descripInput} multiline={ true }/>
 
       <ButtonHighlight label="Save" styleButton={[GlobalStyles.bouton, {width:"50%"}]} styleText={GlobalStyles.textComponent}/>
 

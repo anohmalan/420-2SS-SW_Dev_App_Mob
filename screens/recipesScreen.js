@@ -3,60 +3,39 @@ import { ButtonHighlight } from "../components/buttonHighlight";
 import { GlobalStyles } from "./styles/globalStyles";
 import { RecipesStyles } from './styles/recipesScreenStyles';
 import { colors } from '../theme';
-import { Ionicons, FontAwesome6,MaterialIcons } from '@expo/vector-icons';
+import { Ionicons,MaterialIcons } from '@expo/vector-icons';
 import ToastManager, { Toast } from 'toastify-react-native'
 import { useState } from 'react';
 
-function RecipeItem({recipe, ...otherProps}){
-  const ICON = ["free-breakfast",'dinner-dining','lunch-dining']
-  console.log("ok");
-  console.log(recipe.category);
-  return(
-    console.log("hummc"),
-    <TouchableHighlight >
-
-        <View style={{flexDirection: 'row', }}>
-          <View style={{alignItems: 'center', marginRight: 15, width: 60}}>
-            <MaterialIcons name={recipe.category} size={24} color={colors.buttonPrimary} />
-            <View >
-              <Text style={{color: colors.textWhite, }}>{recipe.durationHours}h{recipe.durationMinutes}</Text>
-            </View>
-          </View>
-
-          <View style={{height: 'auto'}}>
-            <Text style={{ fontWeight: 'bold', flex: 1, verticalAlign: 'bottom', color: colors.textWhite, fontSize: 16}}>{ recipe.name }</Text>
-            {
-              !!recipe.description &&
-                <Text style={ styles.text }>{ recipe.description }</Text>
-            }
-          </View>
-          
-        </View>
-     
-  </TouchableHighlight>
-  );
-
-}
-
 export default function RecipesScreen({ navigation }){
+
+  const EMPTY_RECIPE = () => { return {
+    category: null,
+    name: null,
+    durationHours: null,
+    durationMinutes: null,
+    description: null
+  }}
+  const [newRecipe, setNewRecipe] = useState(EMPTY_RECIPE());
+  console.log(EMPTY_RECIPE.category)
 
 const [recipes, setRecipes] = useState([
   {
-    category: 1,
+    category: "1",
     name: "Poutine",
     durationHours: 0,
     durationMinutes: 10,
     description: "Frites, fromage en grain et sauce brune"
   },
   {
-    category: 2,
+    category: "2",
     name: "Pizza",
     durationHours: 1,
     durationMinutes: 20,
     description: "Pizza au fromage"
   },
   {
-    category: 3,
+    category: "3",
     name: "Burger",
     durationHours: 0,
     durationMinutes: 30,
@@ -64,6 +43,98 @@ const [recipes, setRecipes] = useState([
   }
 ]);
 
+const sortedRecipes = [...recipes].sort((a, b) =>
+  a.name.localeCompare(b.name)
+);
+
+  function handleView() {
+
+    if (recipes.length === 0) {
+      console.log("Aucune recette.")
+      return;
+    }
+
+    const randomIndex = Math.floor(
+      Math.random() * recipes.length
+    );    
+
+    const randomRecipe = recipes[randomIndex];
+
+    navigation.navigate("RecipeScreen", {
+      recipe: randomRecipe,
+    });
+  }
+
+  function handleAdd() {
+    navigation.navigate("RecipeScreen", {
+      recipe: newRecipe,
+    });
+  }
+
+return(
+  <View style={[GlobalStyles.container]}>
+    <Text style={{color: colors.textWhite}}>
+      {JSON.stringify(sortedRecipes)}
+    </Text>
+    <View style={{flexDirection: 'row', justifyContent: 'center', gap: 10}}>
+     <ButtonHighlight label={<MaterialIcons name="add" size={25} height={40} color="white" />}  styleText={{color: colors.move}} styleButton={{borderRadius: 5, height: 40, width: 60}} onPress={handleAdd}/>
+     <ButtonHighlight label={<Ionicons name="eye-outline" size={25} height={40} color="white" />} styleText={{color: colors.move}} styleButton={{borderRadius: 5, height: 40, width: 60}} onPress={handleView}/>
+    </View>
+  </View>
+);
+
+
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    gap: 16,
+    justifyContent: 'center',
+    padding: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: 'lightgray',
+    padding: 8,
+  },
+  text: {
+    fontSize: 15,
+    color: colors.textWhite
+  },
+});
+
+
+// function RecipeItem({recipe, ...otherProps}){
+//   const ICON = ["free-breakfast",'dinner-dining','lunch-dining']
+//   console.log("ok");
+//   console.log(recipe.category);
+//   return(
+//     console.log("hummc"),
+//     <TouchableHighlight >
+
+//         <View style={{flexDirection: 'row', }}>
+//           <View style={{alignItems: 'center', marginRight: 15, width: 60}}>
+//             <MaterialIcons name={recipe.category} size={24} color={colors.buttonPrimary} />
+//             <View >
+//               <Text style={{color: colors.textWhite, }}>{recipe.durationHours}h{recipe.durationMinutes}</Text>
+//             </View>
+//           </View>
+
+//           <View style={{height: 'auto'}}>
+//             <Text style={{ fontWeight: 'bold', flex: 1, verticalAlign: 'bottom', color: colors.textWhite, fontSize: 16}}>{ recipe.name }</Text>
+//             {
+//               !!recipe.description &&
+//                 <Text style={ styles.text }>{ recipe.description }</Text>
+//             }
+//           </View>
+          
+//         </View>
+     
+//   </TouchableHighlight>
+//   );
+
+// }
 
 
 //   const SEED_COUNT = 10;
@@ -153,24 +224,3 @@ const [recipes, setRecipes] = useState([
   //   durationMinutes: recipe.durationMinutes,
   //   description: recipe.description
   // }));
-
-
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    gap: 16,
-    justifyContent: 'center',
-    padding: 16,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: 'lightgray',
-    padding: 8,
-  },
-  text: {
-    fontSize: 15,
-    color: colors.textWhite
-  },
-});

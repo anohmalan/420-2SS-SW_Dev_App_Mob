@@ -2,7 +2,7 @@ import {View, Text} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { colors } from '../theme';
 
-export function PickerGenerator({ ITEM_OPTIONS }){
+export function PickerGenerator({ ITEM_OPTIONS, duration }){
   return (
     <View
       style={{
@@ -22,6 +22,7 @@ export function PickerGenerator({ ITEM_OPTIONS }){
         >
           <View style={{ flex: 1 }}>
             <Picker
+              selectedValue={!!duration[index] && duration[index]}
               style={{ color: colors.second }}
               dropdownIconColor={colors.second}
             >
