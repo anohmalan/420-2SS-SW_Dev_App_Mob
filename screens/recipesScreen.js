@@ -4,10 +4,30 @@ import { GlobalStyles } from "./styles/globalStyles";
 import { RecipesStyles } from './styles/recipesScreenStyles';
 import { colors } from '../theme';
 import { Ionicons,MaterialIcons } from '@expo/vector-icons';
-import ToastManager, { Toast } from 'toastify-react-native'
+import ToastManager, { Toast } from 'toastify-react-native';
+import { TextComponent } from '../components/textComponent';
 import { useState } from 'react';
+import * as React from 'react';
 
 export default function RecipesScreen({ navigation }){
+
+  function handleLogout(){
+    return(     
+      navigation.replace('LoginScreen')   
+    );
+  }
+
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (    
+        <ButtonHighlight label={"Log out"} 
+          styleText={{color: colors.textWhite}} 
+          styleButton={[RecipesStyles.logoutButton]}
+          onPress={handleLogout}
+        />
+      ),
+    });
+  });
 
   const EMPTY_RECIPE = () => { return {
     category: null,
@@ -17,35 +37,34 @@ export default function RecipesScreen({ navigation }){
     description: null
   }}
   const [newRecipe, setNewRecipe] = useState(EMPTY_RECIPE());
-  console.log(EMPTY_RECIPE.category)
 
-const [recipes, setRecipes] = useState([
-  {
-    category: "1",
-    name: "Poutine",
-    durationHours: 0,
-    durationMinutes: 10,
-    description: "Frites, fromage en grain et sauce brune"
-  },
-  {
-    category: "2",
-    name: "Pizza",
-    durationHours: 1,
-    durationMinutes: 20,
-    description: "Pizza au fromage"
-  },
-  {
-    category: "3",
-    name: "Burger",
-    durationHours: 0,
-    durationMinutes: 30,
-    description: "Burger avec frites"
-  }
-]);
+  const [recipes, setRecipes] = useState([
+    {
+      category: "1",
+      name: "Poutine",
+      durationHours: 0,
+      durationMinutes: 10,
+      description: "Frites, fromage en grain et sauce brune"
+    },
+    {
+      category: "2",
+      name: "Pizza",
+      durationHours: 1,
+      durationMinutes: 20,
+      description: "Pizza au fromage"
+    },
+    {
+      category: "3",
+      name: "Burger",
+      durationHours: 0,
+      durationMinutes: 30,
+      description: "Burger avec frites"
+    }
+  ]);
 
-const sortedRecipes = [...recipes].sort((a, b) =>
-  a.name.localeCompare(b.name)
-);
+  const sortedRecipes = [...recipes].sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
 
   function handleView() {
 
@@ -62,12 +81,14 @@ const sortedRecipes = [...recipes].sort((a, b) =>
 
     navigation.navigate("RecipeScreen", {
       recipe: randomRecipe,
+      mode: "view"
     });
   }
 
   function handleAdd() {
     navigation.navigate("RecipeScreen", {
       recipe: newRecipe,
+      mode: "add"
     });
   }
 
