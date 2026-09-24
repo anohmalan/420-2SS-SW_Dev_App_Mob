@@ -18,6 +18,7 @@ export default function RecipesScreen({ navigation, route }){
   }
 
   React.useEffect(() => {
+    const recipeIndex = params?.recipeIndex
     navigation.setOptions({
       headerRight: () => (    
         <ButtonHighlight label={"Log out"} 
@@ -27,16 +28,13 @@ export default function RecipesScreen({ navigation, route }){
         />
       ),
     });
-  });
 
-  React.useEffect(() => {
     if (params?.recipe) {
       setRecipes([...recipes, params.recipe,]);
     }
-    else if(params?.recipeIndex){
-      console.log(params?.recipeIndex)
+    else if(toString(recipeIndex)){
       setRecipes((currentRecipes) =>
-      currentRecipes.filter((_, index) => index !== params?.recipeIndex));
+      currentRecipes.filter((_, index) => index !== recipeIndex));
     }
   }, [params]);
 
