@@ -60,8 +60,9 @@ export default function RecipeScreen({ navigation, route }){
   }
 
   function handleDelete(){
-    const INDEX = PARAMS.index;
-    navigation.popTo("RecipesScreen",{recipeIndex: INDEX});
+    // const INDEX = PARAMS.index;
+    // navigation.popTo("RecipesScreen",{recipeIndex: INDEX});
+    navigation.popTo("RecipesScreen")
   }
   function buttonSaveDelete(){
     return(

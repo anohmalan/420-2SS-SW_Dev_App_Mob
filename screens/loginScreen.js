@@ -13,7 +13,11 @@ export default function LoginScren({ navigation }){
     return(     
       navigation.replace('RecipesScreen')   
     );
-
+  }
+  function handleSignup(){
+    return(     
+      navigation.replace('SignupScreen')   
+    );
   }
   return (
     <View style={[GlobalStyles.container, LoginStyles.container]}>
@@ -24,7 +28,7 @@ export default function LoginScren({ navigation }){
 
       <ButtonHighlight label={"Login"} onPress={() => {handleLogin()}} styleText={GlobalStyles.textComponent}/>
 
-      <ButtonHighlight label={"Sign up!"} styleText={{color: colors.move}} styleButton={{backgroundColor: colors.transp}}/>
+      <ButtonHighlight label={"Sign up!"} onPress={() => {handleSignup()}} styleText={{color: colors.move}} styleButton={{backgroundColor: colors.transp}}/>
 
     </View>
   );
