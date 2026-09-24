@@ -6,6 +6,7 @@ import LoginScreen from './screens/loginScreen';
 import SignupScreen from './screens/signupScreen';
 import RecipeScreen from './screens/recipeScreen';
 import RecipesScreen from './screens/recipesScreen';
+import ToastManager from 'toastify-react-native'
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ export default function App() {
         <Stack.Screen name='RecipeScreen' component={RecipeScreen} options={{title: "Recipe"}}/>
         <Stack.Screen name='RecipesScreen' component={RecipesScreen} options={{title: "Recipes"}}/>
       </Stack.Navigator>
+      <ToastManager />    
     </NavigationContainer>
   );
 }

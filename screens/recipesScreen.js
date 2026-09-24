@@ -4,12 +4,10 @@ import { GlobalStyles } from "./styles/globalStyles";
 import { RecipesStyles } from './styles/recipesScreenStyles';
 import { colors } from '../theme';
 import { Ionicons,MaterialIcons } from '@expo/vector-icons';
-import ToastManager, { Toast } from 'toastify-react-native';
-import { TextComponent } from '../components/textComponent';
 import { useState } from 'react';
 import * as React from 'react';
 
-export default function RecipesScreen({ navigation }){
+export default function RecipesScreen({ navigation, route }){
 
   function handleLogout(){
     return(     

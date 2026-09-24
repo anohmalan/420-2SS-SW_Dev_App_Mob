@@ -8,11 +8,11 @@ import { GlobalStyles } from "./styles/globalStyles";
 import { RecipeStyles } from './styles/recipeScreenStyles';
 import { PickerGenerator } from '../components/pickerGenerator';
 import { colors } from '../theme';
-import ToastManager, { Toast } from 'toastify-react-native'
+import { Toast } from 'toastify-react-native'
 
 export default function RecipeScreen({ navigation, route }){
   const params = route.params
-  const recipe = params.recipe
+  const [recipe, setRecipe] = useState(params.recipe)
   const mode = params.mode
   console.log(mode)
   const categories = [
@@ -32,23 +32,46 @@ export default function RecipeScreen({ navigation, route }){
       icon: 'dinner-dining'
   }];
 
+    const EMPTY_RECIPE = () => { return {
+      category: null,
+      name: null,
+      durationHours: null,
+      durationMinutes: null,
+      description: null
+    }}
+    // const [newRecipe, setNewRecipe] = useState(EMPTY_RECIPE());
+
     function handleAdd() {
-    if ((recipe.name?.trim() ?? '') == '') {
-      Toast.error('Provide a Recipe name', 'bottom')
-    }else if(selectedId == null){
-      Toast.error('Provide a Recipe categoty', 'bottom')
-    }else if(durationHours + durationMinutes == 0){
-      Toast.error('Provide a Recipe duration', 'bottom')
+    if ((name?.trim() ?? '') == '') {
+      Toast.error('Nom requis', 'bottom')
+    }
+    else if(category == false){
+      Toast.error('Catégorie requise', 'bottom')
+    }
+    else if(durationHours + durationMinutes == 0){
+      Toast.error('Durée supérieure à zéro requise', 'bottom')
     }
      else {
-        newTodo.id = Math.random().toString(16).substring(2);
-        newTodo.name = newTodo.name.trim()
-
-        setTodos([newTodo, ...todos]);
-
-        setNewTodo(EMPTY_TODO());
+      recipe.category = category;
+      recipe.name = name;
+      recipe.durationHours = durationHours;
+      recipe.durationMinutes = durationMinutes;
+      recipe.description = description;
+      setRecipe(EMPTY_RECIPE());
+      navigation.navigate("RecipesScreen",recipe);
     }
   }
+
+  const handleDurationChange = (value, index) => {
+    switch (index) {
+      case 1:
+        setDurationMinutes(value);
+        break; 
+      default:
+        setDurationHours(value);
+        break;
+    };
+  };
 
   const options = categories.map((meal, index) => ({
     id: String(index + 1),
@@ -58,14 +81,14 @@ export default function RecipeScreen({ navigation, route }){
   }));
 
   const [name, setName] = useState(recipe.name);
-  const [durationHours, setDurationHours] = useState(recipe.durationHours);
-  const [durationMinutes, setDurationMinutes] = useState(recipe.durationMinutes);
-  const [description, setDescription] = useState(recipe.description);
-  const [selectedId, setSelectedId] = useState(!!recipe.category && recipe.category);
+  const [durationHours, setDurationHours] = useState(recipe.durationHours ?? 0);
+  const [durationMinutes, setDurationMinutes] = useState(recipe.durationMinutes ?? 0);
+  const [description, setDescription] = useState(recipe.description ?? "");
+  const [category, setCategory] = useState(!!recipe.category && recipe.category);
   const PICKER_OPTIONS = [
     {
       label: 'h',
-      value: 24
+      value: 13
     },
     {
       label: 'm',
@@ -75,28 +98,40 @@ export default function RecipeScreen({ navigation, route }){
 
  return (
     <View style={[GlobalStyles.container, RecipeStyles.container]}>
-
       <View style={RecipeStyles.radContainer}>
         <RadioGroup radioButtons={ options } 
-          onPress={setSelectedId} selectedId={selectedId}
+          onPress={setCategory} selectedId={category}
           layout='row' labelStyle={{color: colors.second}} 
         />
       </View>
-      <InputRect placeholder="Name" value={name} style={{width: '100%'}}/>
+      <InputRect placeholder="Name" 
+        value={name} 
+        style={{width: '100%'}}
+        onChangeText={(text) => {setName(text);
+          console.log(`onChangeText: ${name}`);
+        }}
+        />
   
       <View style={RecipeStyles.durationContainer}>
 
         <TextComponent label="Duration" style={{color: colors.second}}/>
 
         <View style={{ flex: 1 }}>
-          <PickerGenerator ITEM_OPTIONS = {PICKER_OPTIONS} duration= {[durationHours,durationMinutes]}/>
+          <PickerGenerator 
+            onValueChange={handleDurationChange} 
+            ITEM_OPTIONS = {PICKER_OPTIONS} duration= {[durationHours,durationMinutes]}/>
         </View>
       
       </View>
 
-      <InputRect  placeholder='Description' value= {description} style={RecipeStyles.descripInput} multiline={ true }/>
+      <InputRect  
+        placeholder='Description' 
+        value= {description} 
+        style={RecipeStyles.descripInput} 
+        multiline={ true }
+        onChangeText={(text) => setDescription(text)} />
 
-      <ButtonHighlight label="Save" styleButton={[GlobalStyles.bouton, {width:"50%"}]} styleText={GlobalStyles.textComponent}/>
+      <ButtonHighlight label="Save" styleButton={[GlobalStyles.bouton, {width:"50%"}]} styleText={GlobalStyles.textComponent} onPress={handleAdd}/>
 
     </View>
   );
