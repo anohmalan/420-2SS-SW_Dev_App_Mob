@@ -9,6 +9,8 @@ import * as React from 'react';
 
 export default function RecipesScreen({ navigation, route }){
 
+  const params = route.params
+
   function handleLogout(){
     return(     
       navigation.replace('LoginScreen')   
@@ -26,6 +28,15 @@ export default function RecipesScreen({ navigation, route }){
       ),
     });
   });
+
+  React.useEffect(() => {
+    console.log(params);
+
+    if (params) {
+      console.log(params.recipe)
+      setRecipes([...recipes, params.recipe,]);
+    }
+  }, [params]);
 
   const EMPTY_RECIPE = () => { return {
     category: null,
@@ -77,17 +88,21 @@ export default function RecipesScreen({ navigation, route }){
 
     const randomRecipe = recipes[randomIndex];
 
-    navigation.navigate("RecipeScreen", {
+    navigation.navigate("RecipeScreen", 
+      {
       recipe: randomRecipe,
-      mode: "view"
-    });
+      // mode: "view"
+    }
+  );
   }
 
   function handleAdd() {
-    navigation.navigate("RecipeScreen", {
-      recipe: newRecipe,
-      mode: "add"
-    });
+    navigation.push("RecipeScreen"
+    //   , {
+    //   recipe: newRecipe,
+    //   // mode: "add"
+    // }
+  );
   }
 
 return(

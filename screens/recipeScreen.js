@@ -12,9 +12,16 @@ import { Toast } from 'toastify-react-native'
 
 export default function RecipeScreen({ navigation, route }){
   const params = route.params
-  const [recipe, setRecipe] = useState(params.recipe)
-  const mode = params.mode
-  console.log(mode)
+      const EMPTY_RECIPE = () => { return {
+      category: null,
+      name: null,
+      durationHours: null,
+      durationMinutes: null,
+      description: null
+    }}
+  const [recipe, setRecipe] = useState(params?.recipe ?? EMPTY_RECIPE())
+  // const mode = params.mode
+  // console.log(mode)
   const categories = [
     {
       value: "1",
@@ -32,13 +39,7 @@ export default function RecipeScreen({ navigation, route }){
       icon: 'dinner-dining'
   }];
 
-    const EMPTY_RECIPE = () => { return {
-      category: null,
-      name: null,
-      durationHours: null,
-      durationMinutes: null,
-      description: null
-    }}
+
     // const [newRecipe, setNewRecipe] = useState(EMPTY_RECIPE());
 
     function handleAdd() {
@@ -58,7 +59,7 @@ export default function RecipeScreen({ navigation, route }){
       recipe.durationMinutes = durationMinutes;
       recipe.description = description;
       setRecipe(EMPTY_RECIPE());
-      navigation.navigate("RecipesScreen",recipe);
+      navigation.popTo("RecipesScreen",{recipe: recipe});
     }
   }
 
