@@ -5,6 +5,7 @@ export const colors = {
   textDark: "#000000",
   textWhite: "#FFFFFF",
   move: "#4a32c1",
+  red: "#DC3545",
   transp: "transparent"
 }
 

@@ -30,22 +30,15 @@ export default function RecipesScreen({ navigation, route }){
   });
 
   React.useEffect(() => {
-    console.log(params);
-
-    if (params) {
-      console.log(params.recipe)
+    if (params?.recipe) {
       setRecipes([...recipes, params.recipe,]);
     }
+    else if(params?.recipeIndex){
+      console.log(params?.recipeIndex)
+      setRecipes((currentRecipes) =>
+      currentRecipes.filter((_, index) => index !== params?.recipeIndex));
+    }
   }, [params]);
-
-  const EMPTY_RECIPE = () => { return {
-    category: null,
-    name: null,
-    durationHours: null,
-    durationMinutes: null,
-    description: null
-  }}
-  const [newRecipe, setNewRecipe] = useState(EMPTY_RECIPE());
 
   const [recipes, setRecipes] = useState([
     {
@@ -78,7 +71,6 @@ export default function RecipesScreen({ navigation, route }){
   function handleView() {
 
     if (recipes.length === 0) {
-      console.log("Aucune recette.")
       return;
     }
 
@@ -88,55 +80,49 @@ export default function RecipesScreen({ navigation, route }){
 
     const randomRecipe = recipes[randomIndex];
 
-    navigation.navigate("RecipeScreen", 
-      {
+    navigation.navigate("RecipeScreen",{
       recipe: randomRecipe,
-      // mode: "view"
+      index: randomIndex
     }
   );
   }
 
   function handleAdd() {
-    navigation.push("RecipeScreen"
-    //   , {
-    //   recipe: newRecipe,
-    //   // mode: "add"
-    // }
-  );
+    navigation.push("RecipeScreen");
   }
 
-return(
-  <View style={[GlobalStyles.container]}>
-    <Text style={{color: colors.textWhite}}>
-      {JSON.stringify(sortedRecipes)}
-    </Text>
-    <View style={{flexDirection: 'row', justifyContent: 'center', gap: 10}}>
-     <ButtonHighlight label={<MaterialIcons name="add" size={25} height={40} color="white" />}  styleText={{color: colors.move}} styleButton={{borderRadius: 5, height: 40, width: 60}} onPress={handleAdd}/>
-     <ButtonHighlight label={<Ionicons name="eye-outline" size={25} height={40} color="white" />} styleText={{color: colors.move}} styleButton={{borderRadius: 5, height: 40, width: 60}} onPress={handleView}/>
+  return(
+    <View style={[GlobalStyles.container]}>
+      <Text style={{color: colors.textWhite}}>
+        {JSON.stringify(sortedRecipes)}
+      </Text>
+      <View style={{flexDirection: 'row', justifyContent: 'center', gap: 10}}>
+      <ButtonHighlight label={<MaterialIcons name="add" size={25} height={40} color="white" />}  styleText={{color: colors.move}} styleButton={{borderRadius: 5, height: 40, width: 60}} onPress={handleAdd}/>
+      <ButtonHighlight label={<Ionicons name="eye-outline" size={25} height={40} color="white" />} styleText={{color: colors.move}} styleButton={{borderRadius: 5, height: 40, width: 60}} onPress={handleView}/>
+      </View>
     </View>
-  </View>
-);
+  );
 
 
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    gap: 16,
-    justifyContent: 'center',
-    padding: 16,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: 'lightgray',
-    padding: 8,
-  },
-  text: {
-    fontSize: 15,
-    color: colors.textWhite
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     gap: 16,
+//     justifyContent: 'center',
+//     padding: 16,
+//   },
+//   input: {
+//     borderWidth: 1,
+//     borderColor: 'lightgray',
+//     padding: 8,
+//   },
+//   text: {
+//     fontSize: 15,
+//     color: colors.textWhite
+//   },
+// });
 
 
 // function RecipeItem({recipe, ...otherProps}){

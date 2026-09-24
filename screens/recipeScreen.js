@@ -11,18 +11,17 @@ import { colors } from '../theme';
 import { Toast } from 'toastify-react-native'
 
 export default function RecipeScreen({ navigation, route }){
-  const params = route.params
-      const EMPTY_RECIPE = () => { return {
-      category: null,
-      name: null,
-      durationHours: null,
-      durationMinutes: null,
-      description: null
-    }}
-  const [recipe, setRecipe] = useState(params?.recipe ?? EMPTY_RECIPE())
-  // const mode = params.mode
-  // console.log(mode)
-  const categories = [
+  const PARAMS = route.params
+  const EMPTY_RECIPE = () => { return {
+    category: null,
+    name: null,
+    durationHours: null,
+    durationMinutes: null,
+    description: null
+  }}
+  const [recipe, setRecipe] = useState(PARAMS?.recipe ?? EMPTY_RECIPE())
+
+  const CATEGORIES = [
     {
       value: "1",
       label:'Breakfast', 
@@ -39,10 +38,7 @@ export default function RecipeScreen({ navigation, route }){
       icon: 'dinner-dining'
   }];
 
-
-    // const [newRecipe, setNewRecipe] = useState(EMPTY_RECIPE());
-
-    function handleAdd() {
+  function handleAdd() {
     if ((name?.trim() ?? '') == '') {
       Toast.error('Nom requis', 'bottom')
     }
@@ -52,7 +48,7 @@ export default function RecipeScreen({ navigation, route }){
     else if(durationHours + durationMinutes == 0){
       Toast.error('Durée supérieure à zéro requise', 'bottom')
     }
-     else {
+    else {
       recipe.category = category;
       recipe.name = name;
       recipe.durationHours = durationHours;
@@ -61,6 +57,33 @@ export default function RecipeScreen({ navigation, route }){
       setRecipe(EMPTY_RECIPE());
       navigation.popTo("RecipesScreen",{recipe: recipe});
     }
+  }
+
+  function handleDelete(){
+    const INDEX = PARAMS.index;
+    navigation.popTo("RecipesScreen",{recipeIndex: INDEX});
+  }
+  function buttonSaveDelete(){
+    return(
+      <>
+        {PARAMS?.recipe ? 
+          (
+            <ButtonHighlight
+              label="Delete"
+              styleButton={[GlobalStyles.bouton, { width: 150, backgroundColor: colors.red, }]}
+              styleText={GlobalStyles.textComponent}
+              onPress={handleDelete}
+            /> ) : (
+            <ButtonHighlight
+              label="Save"
+              styleButton={[GlobalStyles.bouton, { width: 150 }]}
+              styleText={GlobalStyles.textComponent}
+              onPress={handleAdd}
+            />
+          )
+        }
+      </>
+    );
   }
 
   const handleDurationChange = (value, index) => {
@@ -74,7 +97,7 @@ export default function RecipeScreen({ navigation, route }){
     };
   };
 
-  const options = categories.map((meal, index) => ({
+  const options = CATEGORIES.map((meal, index) => ({
     id: String(index + 1),
     label: meal.label,
     value: meal.value,
@@ -130,10 +153,11 @@ export default function RecipeScreen({ navigation, route }){
         value= {description} 
         style={RecipeStyles.descripInput} 
         multiline={ true }
-        onChangeText={(text) => setDescription(text)} />
+        onChangeText={(text) => setDescription(text)} 
+      />
 
-      <ButtonHighlight label="Save" styleButton={[GlobalStyles.bouton, {width:"50%"}]} styleText={GlobalStyles.textComponent} onPress={handleAdd}/>
-
+      {buttonSaveDelete()}
+      
     </View>
   );
 }
