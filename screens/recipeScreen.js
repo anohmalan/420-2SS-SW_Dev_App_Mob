@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { useState } from 'react';
-import RadioGroup from 'react-native-radio-buttons-group';
+import   RadioGroup from 'react-native-radio-buttons-group';
 import { TextComponent } from '../components/textComponent';
 import { InputRect } from "../components/inputRect";
 import { ButtonHighlight } from "../components/buttonHighlight";
@@ -9,34 +9,13 @@ import { RecipeStyles } from './styles/recipeScreenStyles';
 import { PickerGenerator } from '../components/pickerGenerator';
 import { colors } from '../theme';
 import { Toast } from 'toastify-react-native'
+import * as CONST from '../constants/index'
 
 export default function RecipeScreen({ navigation, route }){
+  
   const PARAMS = route.params
-  const EMPTY_RECIPE = () => { return {
-    category: null,
-    name: null,
-    durationHours: null,
-    durationMinutes: null,
-    description: null
-  }}
-  const [recipe, setRecipe] = useState(PARAMS?.recipe ?? EMPTY_RECIPE())
 
-  const CATEGORIES = [
-    {
-      value: "1",
-      label:'Breakfast', 
-      icon: 'free-breakfast'
-    },
-    {
-      value: "2",
-      label:'Lunch', 
-      icon: 'lunch-dining'
-    },
-    {
-      value: "3",
-      label:'Dinner', 
-      icon: 'dinner-dining'
-  }];
+  const [recipe, setRecipe] = useState(PARAMS?.recipe ?? CONST.EMPTY_RECIPE())
 
   function handleAdd() {
     if ((name?.trim() ?? '') == '') {
@@ -54,7 +33,7 @@ export default function RecipeScreen({ navigation, route }){
       recipe.durationHours = durationHours;
       recipe.durationMinutes = durationMinutes;
       recipe.description = description;
-      setRecipe(EMPTY_RECIPE());
+      setRecipe(CONST.EMPTY_RECIPE());
       navigation.popTo("RecipesScreen",{recipe: recipe});
     }
   }
@@ -71,13 +50,13 @@ export default function RecipeScreen({ navigation, route }){
           (
             <ButtonHighlight
               label="Delete"
-              styleButton={[GlobalStyles.bouton, { width: 150, backgroundColor: colors.red, }]}
+              styleButton={[GlobalStyles.bouton, RecipeStyles.deleteButton]}
               styleText={GlobalStyles.textComponent}
               onPress={handleDelete}
             /> ) : (
             <ButtonHighlight
               label="Save"
-              styleButton={[GlobalStyles.bouton, { width: 150 }]}
+              styleButton={[GlobalStyles.bouton, RecipeStyles.saveButton]}
               styleText={GlobalStyles.textComponent}
               onPress={handleAdd}
             />
@@ -98,7 +77,7 @@ export default function RecipeScreen({ navigation, route }){
     };
   };
 
-  const options = CATEGORIES.map((meal, index) => ({
+  const options = CONST.CATEGORIES.map((meal, index) => ({
     id: String(index + 1),
     label: meal.label,
     value: meal.value,
@@ -110,16 +89,6 @@ export default function RecipeScreen({ navigation, route }){
   const [durationMinutes, setDurationMinutes] = useState(recipe.durationMinutes ?? 0);
   const [description, setDescription] = useState(recipe.description ?? "");
   const [category, setCategory] = useState(!!recipe.category && recipe.category);
-  const PICKER_OPTIONS = [
-    {
-      label: 'h',
-      value: 13
-    },
-    {
-      label: 'm',
-      value: 60
-    }
-  ];
 
  return (
     <View style={[GlobalStyles.container, RecipeStyles.container]}>
@@ -133,9 +102,8 @@ export default function RecipeScreen({ navigation, route }){
         value={name} 
         style={{width: '100%'}}
         onChangeText={(text) => {setName(text);
-          console.log(`onChangeText: ${name}`);
         }}
-        />
+      />
   
       <View style={RecipeStyles.durationContainer}>
 
@@ -144,7 +112,7 @@ export default function RecipeScreen({ navigation, route }){
         <View style={{ flex: 1 }}>
           <PickerGenerator 
             onValueChange={handleDurationChange} 
-            ITEM_OPTIONS = {PICKER_OPTIONS} duration= {[durationHours,durationMinutes]}/>
+            ITEM_OPTIONS = {CONST.PICKER_OPTIONS} duration= {[durationHours,durationMinutes]}/>
         </View>
       
       </View>

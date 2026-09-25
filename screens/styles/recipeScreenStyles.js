@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../theme";
 
 export const RecipeStyles = StyleSheet.create({
   container:{
@@ -16,4 +17,11 @@ export const RecipeStyles = StyleSheet.create({
     height: '55%', 
     verticalAlign: 'top'
   },
+  deleteButton:{ 
+    width: 150, 
+    backgroundColor: colors.red, 
+  },
+  saveButton:{
+    width: 150, 
+  }
 });

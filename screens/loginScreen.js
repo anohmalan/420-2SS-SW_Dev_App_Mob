@@ -4,7 +4,6 @@ import { ButtonHighlight } from "../components/buttonHighlight";
 import { GlobalStyles } from "./styles/globalStyles";
 import { LoginStyles } from './styles/loginScreenStyles';
 import { colors } from '../theme';
-import { useState } from 'react';
 
 
 export default function LoginScren({ navigation }){
@@ -26,9 +25,16 @@ export default function LoginScren({ navigation }){
 
       <InputRect placeholder='Password'/>
 
-      <ButtonHighlight label={"Login"} onPress={() => {handleLogin()}} styleText={GlobalStyles.textComponent}/>
+      <ButtonHighlight label={"Login"} 
+        onPress={() => {handleLogin()}} 
+        styleText={GlobalStyles.textComponent}
+      />
 
-      <ButtonHighlight label={"Sign up!"} onPress={() => {handleSignup()}} styleText={{color: colors.move}} styleButton={{backgroundColor: colors.transp}}/>
+      <ButtonHighlight label={"Sign up!"} 
+        onPress={() => {handleSignup()}} 
+        styleText={{color: colors.move}} 
+        styleButton={{backgroundColor: colors.transp}}
+      />
 
     </View>
   );
