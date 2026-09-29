@@ -1,29 +1,22 @@
 import {View, Text} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { PickerStyles } from './styles/pickerStyles';
 import { colors } from '../theme';
 
 export function PickerGenerator({ ITEM_OPTIONS, duration, onValueChange }){
   return (
     <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        flex: 1,
-      }}
+      style={[PickerStyles.container]}
     >
       {ITEM_OPTIONS.map((option, index) => (
         <View
           key={index}
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
+          style={[PickerStyles.container]}
         >
           <View style={{ flex: 1 }}>
             <Picker
               selectedValue={duration[index]}
-              style={{ color: colors.second }}
+              style={[PickerStyles.thePicker]}
               dropdownIconColor={colors.second}
               onValueChange={(value) => onValueChange(value, index)}
             >

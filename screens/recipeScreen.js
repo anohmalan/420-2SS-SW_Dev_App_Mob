@@ -100,7 +100,7 @@ export default function RecipeScreen({ navigation, route }){
       </View>
       <InputRect placeholder="Name" 
         value={name} 
-        style={{width: '100%'}}
+        style={[RecipeStyles.nameInput]}
         onChangeText={(text) => {setName(text);
         }}
       />

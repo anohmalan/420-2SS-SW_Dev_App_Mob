@@ -3,6 +3,7 @@ import { ButtonHighlight } from "../components/buttonHighlight";
 import { GlobalStyles } from "./styles/globalStyles";
 import { RecipesStyles } from './styles/recipesScreenStyles';
 import { colors } from '../theme';
+import { fontSizes } from '../theme';
 import { Ionicons,MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import * as React from 'react';
@@ -94,9 +95,19 @@ export default function RecipesScreen({ navigation, route }){
       <Text style={{color: colors.textWhite}}>
         {JSON.stringify(sortedRecipes)}
       </Text>
-      <View style={{flexDirection: 'row', justifyContent: 'center', gap: 10}}>
-      <ButtonHighlight label={<MaterialIcons name="add" size={25} height={40} color="white" />}  styleText={{color: colors.move}} styleButton={{borderRadius: 5, height: 40, width: 60}} onPress={handleAdd}/>
-      <ButtonHighlight label={<Ionicons name="eye-outline" size={25} height={40} color="white" />} styleText={{color: colors.move}} styleButton={{borderRadius: 5, height: 40, width: 60}} onPress={handleView}/>
+      <View style={[RecipesStyles.buttonContainer]}>
+        <ButtonHighlight 
+          label={<MaterialIcons name="add" size={fontSizes.xm} height={fontSizes.xyz} color= {colors.second} />}  
+          styleText={{color: colors.move}} 
+          styleButton={[RecipesStyles.button]} 
+          onPress={handleAdd}
+        />
+        <ButtonHighlight 
+          label={<Ionicons name="eye-outline" size={fontSizes.xm} height={fontSizes.xyz} color= {colors.second} />} 
+          styleText={{color: colors.move}} 
+          styleButton={[RecipesStyles.button]} 
+          onPress={handleView}
+        />
       </View>
     </View>
   );

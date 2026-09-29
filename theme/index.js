@@ -34,6 +34,7 @@ export const fontSizes = {
   xm: 24,
   xxl: 28,
   xxxl: 32,
+  xyz: 40
 };
 
 export const iconSizes = {

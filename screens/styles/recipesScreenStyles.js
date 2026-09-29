@@ -12,5 +12,15 @@ export const RecipesStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 3,
-  }
+  },
+  button:{
+    borderRadius: 5, 
+    height: 40, 
+    width: 60
+  },
+  buttonContainer:{
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    gap: 10
+  },
 });

@@ -10,12 +10,16 @@ export const RecipeStyles = StyleSheet.create({
   },
   durationContainer:{
     flexDirection: 'row', 
-    alignItems: 'center'
+    alignItems: 'center',
+    width: 320
   },
   descripInput:{
-    width: '100%', 
-    height: '55%', 
+    width: 320, 
+    height: 350, 
     verticalAlign: 'top'
+  },
+  nameInput:{
+    width: 320
   },
   deleteButton:{ 
     width: 150, 
