@@ -28,6 +28,7 @@ export default function RecipesScreen({ navigation, route }){
           onPress={handleLogout}
         />
       ),
+      headerBackVisible: false,
     });
 
     if (params?.recipe) {
