@@ -51,13 +51,11 @@ export default function RecipeScreen({ navigation, route }){
             <ButtonHighlight
               label="Delete"
               styleButton={[GlobalStyles.bouton, RecipeStyles.deleteButton]}
-              styleText={GlobalStyles.textComponent}
               onPress={handleDelete}
             /> ) : (
             <ButtonHighlight
               label="Save"
               styleButton={[GlobalStyles.bouton, RecipeStyles.saveButton]}
-              styleText={GlobalStyles.textComponent}
               onPress={handleAdd}
             />
           )

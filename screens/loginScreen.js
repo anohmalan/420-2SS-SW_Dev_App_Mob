@@ -27,7 +27,6 @@ export default function LoginScren({ navigation }){
 
       <ButtonHighlight label={"Login"} 
         onPress={() => {handleLogin()}} 
-        styleText={GlobalStyles.textComponent}
       />
 
       <ButtonHighlight label={"Sign up!"} 

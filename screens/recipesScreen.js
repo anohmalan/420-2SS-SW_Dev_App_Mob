@@ -1,4 +1,4 @@
-import { View, TouchableHighlight, ScrollView, StyleSheet, Text ,Button} from 'react-native';
+import { View, Text} from 'react-native';
 import { ButtonHighlight } from "../components/buttonHighlight";
 import { GlobalStyles } from "./styles/globalStyles";
 import { RecipesStyles } from './styles/recipesScreenStyles';
