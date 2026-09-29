@@ -4,10 +4,16 @@ import { ButtonHighlight } from "../components/buttonHighlight";
 import { GlobalStyles } from "./styles/globalStyles";
 import { LoginStyles } from './styles/loginScreenStyles';
 import { colors } from '../theme';
+import * as React from 'react';
 
 
 export default function LoginScren({ navigation }){
 
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerBackVisible: false,
+    });
+  });
   function handleLogin(){
     return(     
       navigation.replace('RecipesScreen')   
