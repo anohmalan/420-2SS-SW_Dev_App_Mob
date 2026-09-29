@@ -1,5 +1,5 @@
 import { TouchableHighlight} from 'react-native';
-import { TextComponent } from './textComponent';
+import { TextComponent } from './TextComponent';
 import { ButtonStyles } from './styles/buttonStyles';
 
 export function ButtonHighlight({label,styleText, styleButton, ...otherProps}){
