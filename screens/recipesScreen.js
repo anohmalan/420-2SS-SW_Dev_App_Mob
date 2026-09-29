@@ -19,7 +19,6 @@ export default function RecipesScreen({ navigation, route }){
   }
 
   React.useEffect(() => {
-    const recipeIndex = params?.recipeIndex
     navigation.setOptions({
       headerRight: () => (    
         <ButtonHighlight label={"Log out"} 
@@ -30,6 +29,10 @@ export default function RecipesScreen({ navigation, route }){
       ),
       headerBackVisible: false,
     });
+  });
+
+  React.useEffect(() => {
+    const recipeIndex = params?.recipeIndex
 
     if (params?.recipe) {
       setRecipes([...recipes, params.recipe,]);
