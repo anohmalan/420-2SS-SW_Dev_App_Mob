@@ -15,7 +15,7 @@ export default function LoginScren({ navigation }){
   }
   function handleSignup(){
     return(     
-      navigation.replace('SignupScreen')   
+      navigation.navigate('SignupScreen')   
     );
   }
   return (
