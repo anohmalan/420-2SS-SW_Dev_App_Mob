@@ -1,4 +1,4 @@
-import { View, Text} from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { ButtonHighlight } from "../components/ButtonHighlight";
 import { GlobalStyles } from "./styles/globalStyles";
 import { RecipesStyles } from './styles/recipesScreenStyles';
@@ -6,10 +6,68 @@ import { colors } from '../theme';
 import { fontSizes } from '../theme';
 import { Ionicons,MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
+import { TouchableHighlight } from 'react-native';
+import { FontAwesome6 } from '@expo/vector-icons';
 import * as React from 'react';
 
 export default function RecipesScreen({ navigation, route }){
 
+    function list(sortedRecipes) {
+      const ICON = ["free-breakfast",'dinner-dining','lunch-dining']
+  if (sortedRecipes.length === 0) {
+    return (
+      <View
+        style={{
+          flexGrow: 1,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Text style={{ fontSize: 48, color: 'gray' }}>
+          No recipes...
+        </Text>
+      </View>
+    );
+  }
+
+  return (
+    <View>
+         <FlatList
+          ItemSeparatorComponent={ () => <View style={{ height: 2, backgroundColor: 'white' }}/> }
+        data={sortedRecipes}
+
+        renderItem={({item}) => {
+          return(
+            <TouchableHighlight onPress={handleView} style={{minHeight: 70, alignContent: 'center', justifyContent:'center'}}>
+
+              <View style={{flexDirection: 'row',}}>
+                <View style={{alignItems: 'center', marginRight: 15, width: 60}}>
+                  <MaterialIcons name={ICON[item.category-1]} size={24} color={colors.buttonPrimary} />
+                  <View >
+                    <Text style={{color: colors.textWhite, }}>{item.durationHours}h{item.durationMinutes}</Text>
+                  </View>
+                </View>
+
+                <View style={{height: 'auto'}}>
+                  <Text style={{ fontWeight: 'bold', flex: 1, verticalAlign: 'bottom', color: colors.textWhite, fontSize: 16}}>{ item.name }</Text>
+                  {
+                    !!item.description &&
+                      <Text style={ {fontSize: 15,color: colors.textWhite} }>{ item.description }</Text>
+                  }
+                </View>
+              
+              </View>
+     
+            </TouchableHighlight>
+          )
+        }}
+    />
+      
+        <ButtonHighlight label={<FontAwesome6 name="add" size={30} color="white" />} styleText={{color: colors.move}} styleButton={{zIndex:10, position: 'absolute', end: 25, bottom:70, borderRadius: 999, height: 70, width: 70}}/>
+     
+    </View>
+  );
+}
   const params = route.params
 
   function handleLogout(){
@@ -64,6 +122,132 @@ export default function RecipesScreen({ navigation, route }){
       durationHours: 0,
       durationMinutes: 30,
       description: "Burger avec frites"
+    },
+     {
+      category: "1",
+      name: "Poutine",
+      durationHours: 0,
+      durationMinutes: 10,
+      description: "Frites, fromage en grain et sauce brune"
+    },
+    {
+      category: "2",
+      name: "Pizza",
+      durationHours: 1,
+      durationMinutes: 20,
+      description: "Pizza au fromage"
+    },
+    {
+      category: "3",
+      name: "Burger",
+      durationHours: 0,
+      durationMinutes: 30,
+      description: "Burger avec frites"
+    },
+     {
+      category: "1",
+      name: "Poutine",
+      durationHours: 0,
+      durationMinutes: 10,
+      description: "Frites, fromage en grain et sauce brune"
+    },
+    {
+      category: "2",
+      name: "Pizza",
+      durationHours: 1,
+      durationMinutes: 20,
+      description: "Pizza au fromage"
+    },
+    {
+      category: "3",
+      name: "Burger",
+      durationHours: 0,
+      durationMinutes: 30,
+      description: "Burger avec frites"
+    },
+     {
+      category: "1",
+      name: "Poutine",
+      durationHours: 0,
+      durationMinutes: 10,
+      description: "Frites, fromage en grain et sauce brune"
+    },
+    {
+      category: "2",
+      name: "Pizza",
+      durationHours: 1,
+      durationMinutes: 20,
+      description: "Pizza au fromage"
+    },
+    {
+      category: "3",
+      name: "Burger",
+      durationHours: 0,
+      durationMinutes: 30,
+      description: "Burger avec frites"
+    },
+     {
+      category: "1",
+      name: "Poutine",
+      durationHours: 0,
+      durationMinutes: 10,
+      description: "Frites, fromage en grain et sauce brune"
+    },
+    {
+      category: "2",
+      name: "Pizza",
+      durationHours: 1,
+      durationMinutes: 20,
+      description: "Pizza au fromage"
+    },
+    {
+      category: "3",
+      name: "Burger",
+      durationHours: 0,
+      durationMinutes: 30,
+      description: "Burger avec frites"
+    },
+     {
+      category: "1",
+      name: "Poutine",
+      durationHours: 0,
+      durationMinutes: 10,
+      description: "Frites, fromage en grain et sauce brune"
+    },
+    {
+      category: "2",
+      name: "Pizza",
+      durationHours: 1,
+      durationMinutes: 20,
+      description: "Pizza au fromage"
+    },
+    {
+      category: "3",
+      name: "Burger",
+      durationHours: 0,
+      durationMinutes: 30,
+      description: "Burger avec frites"
+    },
+     {
+      category: "1",
+      name: "Poutine",
+      durationHours: 0,
+      durationMinutes: 10,
+      description: "Frites, fromage en grain et sauce brune"
+    },
+    {
+      category: "2",
+      name: "Pizza",
+      durationHours: 1,
+      durationMinutes: 20,
+      description: "Pizza au fromage"
+    },
+    {
+      category: "3",
+      name: "Burger",
+      durationHours: 0,
+      durationMinutes: 30,
+      description: "Burger avec frites"
     }
   ]);
 
@@ -95,25 +279,8 @@ export default function RecipesScreen({ navigation, route }){
   }
 
   return(
-    <View style={[GlobalStyles.container]}>
-      <Text style={{color: colors.textWhite}}>
-        {JSON.stringify(sortedRecipes)}
-      </Text>
-      <View style={[RecipesStyles.buttonContainer]}>
-        <ButtonHighlight 
-          label={<MaterialIcons name="add" size={fontSizes.xm} height={fontSizes.xyz} color= {colors.second} />}  
-          styleText={{color: colors.move}} 
-          styleButton={[RecipesStyles.button]} 
-          onPress={handleAdd}
-        />
-        <ButtonHighlight 
-          label={<Ionicons name="eye-outline" size={fontSizes.xm} height={fontSizes.xyz} color= {colors.second} />} 
-          styleText={{color: colors.move}} 
-          styleButton={[RecipesStyles.button]} 
-          onPress={handleView}
-        />
-      </View>
-    </View>
+    <View style={GlobalStyles.container}>{list(recipes)}</View>
+    
   );
 
 
@@ -138,36 +305,36 @@ export default function RecipesScreen({ navigation, route }){
 // });
 
 
-// function RecipeItem({recipe, ...otherProps}){
-//   const ICON = ["free-breakfast",'dinner-dining','lunch-dining']
-//   console.log("ok");
-//   console.log(recipe.category);
-//   return(
-//     console.log("hummc"),
-//     <TouchableHighlight >
+function RecipeItem({recipe, ...otherProps}){
+  const ICON = ["free-breakfast",'dinner-dining','lunch-dining']
+  console.log("ok");
+  console.log(recipe.category);
+  return(
+    console.log("hummc"),
+    <TouchableHighlight >
 
-//         <View style={{flexDirection: 'row', }}>
-//           <View style={{alignItems: 'center', marginRight: 15, width: 60}}>
-//             <MaterialIcons name={recipe.category} size={24} color={colors.buttonPrimary} />
-//             <View >
-//               <Text style={{color: colors.textWhite, }}>{recipe.durationHours}h{recipe.durationMinutes}</Text>
-//             </View>
-//           </View>
+        <View style={{flexDirection: 'row', }}>
+          <View style={{alignItems: 'center', marginRight: 15, width: 60}}>
+            <MaterialIcons name={recipe.category} size={24} color={colors.buttonPrimary} />
+            <View >
+              <Text style={{color: colors.textWhite, }}>{recipe.durationHours}h{recipe.durationMinutes}</Text>
+            </View>
+          </View>
 
-//           <View style={{height: 'auto'}}>
-//             <Text style={{ fontWeight: 'bold', flex: 1, verticalAlign: 'bottom', color: colors.textWhite, fontSize: 16}}>{ recipe.name }</Text>
-//             {
-//               !!recipe.description &&
-//                 <Text style={ styles.text }>{ recipe.description }</Text>
-//             }
-//           </View>
+          <View style={{height: 'auto'}}>
+            <Text style={{ fontWeight: 'bold', flex: 1, verticalAlign: 'bottom', color: colors.textWhite, fontSize: 16}}>{ recipe.name }</Text>
+            {
+              !!recipe.description &&
+                <Text style={ styles.text }>{ recipe.description }</Text>
+            }
+          </View>
           
-//         </View>
+        </View>
      
-//   </TouchableHighlight>
-//   );
+  </TouchableHighlight>
+  );
 
-// }
+}
 
 
 //   const SEED_COUNT = 10;
@@ -187,8 +354,8 @@ export default function RecipesScreen({ navigation, route }){
 
 //   const [recipes, setRecipes] = useState(SEED);
 
-//   function list() {
-//   if (recipes.length === 0) {
+//   function list(sortedRecipes) {
+//   if (sortedRecipes.length === 0) {
 //     return (
 //       <View
 //         style={{
@@ -206,7 +373,8 @@ export default function RecipesScreen({ navigation, route }){
 
 //   return (
 //     <View>
-//       <ScrollView style={{  }}>
+      
+//       {/* <ScrollView style={{  }}>
 //       {recipes.map((recipe) => {
 //         return (
 //           <View style={[GlobalStyles.container,{ width: "100%", padding: 10,gap:10, alignItems: 'flex-start'}]}>
@@ -216,7 +384,15 @@ export default function RecipesScreen({ navigation, route }){
           
 //         );
 //       })}
-//     </ScrollView>
+//     </ScrollView> */}
+//          <FlatList
+
+//         data={sortedRecipes}
+
+//         renderItem={() => {
+//           <RecipeItem recipe={sortedRecipes}/>
+//         }}
+//     />
       
 //         <ButtonHighlight label={<FontAwesome6 name="add" size={30} color="white" />} styleText={{color: colors.move}} styleButton={{zIndex:10, position: 'absolute', end: 25, bottom:70, borderRadius: 999, height: 70, width: 70}}/>
      
