@@ -36,9 +36,9 @@ export default function RecipesScreen({ navigation, route }){
           ItemSeparatorComponent={ () => <View style={{ height: 2, backgroundColor: 'white' }}/> }
         data={sortedRecipes}
 
-        renderItem={({item}) => {
+        renderItem={({item, index,}) => {
           return(
-            <TouchableHighlight onPress={handleView} style={{minHeight: 70, alignContent: 'center', justifyContent:'center'}}>
+            <TouchableHighlight onPress={()=>handleView(index)} style={{minHeight: 70, alignContent: 'center', justifyContent:'center'}}>
 
               <View style={{flexDirection: 'row',}}>
                 <View style={{alignItems: 'center', marginRight: 15, width: 60}}>
@@ -255,21 +255,15 @@ export default function RecipesScreen({ navigation, route }){
     a.name.localeCompare(b.name)
   );
 
-  function handleView() {
+  function handleView(index) {
 
     if (recipes.length === 0) {
       return;
-    }
-
-    const randomIndex = Math.floor(
-      Math.random() * recipes.length
-    );    
-
-    const randomRecipe = recipes[randomIndex];
+    } 
 
     navigation.navigate("RecipeScreen",{
-      recipe: randomRecipe,
-      index: randomIndex
+      recipe: recipes[index],
+      index: index
     }
   );
   }
