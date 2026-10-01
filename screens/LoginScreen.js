@@ -1,6 +1,6 @@
 import { View } from 'react-native';
-import { InputRect } from "../components/inputRect";
-import { ButtonHighlight } from "../components/buttonHighlight";
+import { InputRect } from "../components/InputRect";
+import { ButtonHighlight } from "../components/ButtonHighlight";
 import { GlobalStyles } from "./styles/globalStyles";
 import { LoginStyles } from './styles/loginScreenStyles';
 import { colors } from '../theme';

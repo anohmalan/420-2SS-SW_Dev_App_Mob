@@ -1,5 +1,5 @@
 import { View, Text} from 'react-native';
-import { ButtonHighlight } from "../components/buttonHighlight";
+import { ButtonHighlight } from "../components/ButtonHighlight";
 import { GlobalStyles } from "./styles/globalStyles";
 import { RecipesStyles } from './styles/recipesScreenStyles';
 import { colors } from '../theme';
