@@ -14,6 +14,7 @@ export default function RecipesScreen({ navigation, route }){
 
     function list(sortedRecipes) {
       const ICON = ["free-breakfast",'dinner-dining','lunch-dining']
+      const ICON_COLOR = [colors.breakfast,colors.dinner, colors.lunch]
   if (sortedRecipes.length === 0) {
     return (
       <View
@@ -42,7 +43,7 @@ export default function RecipesScreen({ navigation, route }){
 
               <View style={{flexDirection: 'row'}}>
                 <View style={{alignItems: 'center', marginRight: 15, width: 60}}>
-                  <MaterialIcons name={ICON[item.category-1]} size={24} color={colors.buttonPrimary} />
+                  <MaterialIcons name={ICON[item.category-1]} size={24} color={ICON_COLOR[item.category-1]} />
                   <View >
                     <Text style={{color: colors.textWhite, }}>{item.durationHours}h{item.durationMinutes}</Text>
                   </View>

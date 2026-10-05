@@ -6,6 +6,9 @@ export const colors = {
   textWhite: "#FFFFFF",
   move: "#4a32c1",
   red: "#DC3545",
+  breakfast: "#F2A93B",
+  dinner: "#00008B",
+  lunch: "#02FF00",
   transp: "transparent"
 }
 
