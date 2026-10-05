@@ -1,82 +1,14 @@
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, TouchableHighlight } from 'react-native';
 import { ButtonHighlight } from "../components/ButtonHighlight";
-import { GlobalStyles } from "./styles/globalStyles";
 import { RecipesStyles } from './styles/recipesScreenStyles';
-import { colors } from '../theme';
-import { fontSizes } from '../theme';
-import { Ionicons,MaterialIcons } from '@expo/vector-icons';
-import { useState } from 'react';
-import { TouchableHighlight } from 'react-native';
+import { colors,iconSizes,fontSizes } from '../theme';
+import { GlobalStyles } from "./styles/globalStyles";
+import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
+import { useState } from 'react';
 import * as React from 'react';
 
 export default function RecipesScreen({ navigation, route }){
-
-    function list(sortedRecipes) {
-      const ICON = ["free-breakfast",'dinner-dining','lunch-dining']
-      const ICON_COLOR = [colors.breakfast,colors.dinner, colors.lunch]
-  if (sortedRecipes.length === 0) {
-    return (
-      <View
-        style={{
-          flexGrow: 1,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <Text style={{ fontSize: 48, color: 'gray' }}>
-          No recipes...
-        </Text>
-      </View>
-    );
-  }
-
-  return (
-    <View style={{width: 310}}>
-         <FlatList style={{ }}
-          ItemSeparatorComponent={ () => <View style={{ height: 2, backgroundColor: 'white' }}/> }
-        data={sortedRecipes}
-
-        renderItem={({item, index,}) => {
-          return(
-            <TouchableHighlight onPress={()=>handleView(index)} style={{minHeight: 70, alignContent: 'center', justifyContent:'center'}}>
-
-              <View style={{flexDirection: 'row'}}>
-                <View style={{alignItems: 'center', marginRight: 15, width: 60}}>
-                  <MaterialIcons name={ICON[item.category-1]} size={24} color={ICON_COLOR[item.category-1]} />
-                  <View >
-                    <Text style={{color: colors.textWhite, }}>{item.durationHours}h{item.durationMinutes}</Text>
-                  </View>
-                </View>
-
-                <View style={{height: 'auto'}}>
-                  <Text style={{ fontWeight: 'bold', flex: 1, color: colors.textWhite, fontSize: 16}}>{ item.name }</Text>
-                
-                  {
-                    !!item.description &&
-                      <Text style={ {fontSize: 15,color: colors.textWhite} }>{ item.description }</Text>
-                  }
-                  
-                </View>
-              
-              </View>
-     
-            </TouchableHighlight>
-          )
-        }}
-    />
-      
-     
-    </View>
-  );
-}
-  const params = route.params
-
-  function handleLogout(){
-    return(     
-      navigation.replace('LoginScreen')   
-    );
-  }
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -91,20 +23,88 @@ export default function RecipesScreen({ navigation, route }){
     });
   });
 
-  React.useEffect(() => {
-    const recipeIndex = params?.recipeIndex
+  React.useEffect(() => 
+    {
+      const recipeIndex = params?.recipeIndex
 
-    if (params?.recipe) {
-      setRecipes([...recipes, params.recipe,]);
+      if (params?.recipe) {
+        setRecipes([...recipes, params.recipe,]);
+      }
+      else if(toString(recipeIndex)){
+        setRecipes((currentRecipes) =>
+        currentRecipes.filter((_, index) => index !== recipeIndex));
+      }
+    }, [params]
+  );
+
+  function list(sortedRecipes) {
+    const ICON = ["free-breakfast",'dinner-dining','lunch-dining']
+    const ICON_COLOR = [colors.breakfast,colors.dinner, colors.lunch]
+    
+    if (sortedRecipes.length === 0) {
+      return (
+        <View
+          style={RecipesStyles.containerListVide}
+        >
+          <Text style={{ fontSize: fontSizes.xxl, color: colors.textWhite }}>
+            No recipes...
+          </Text>
+        </View>
+      );
     }
-    else if(toString(recipeIndex)){
-      setRecipes((currentRecipes) =>
-      currentRecipes.filter((_, index) => index !== recipeIndex));
-    }
-  }, [params]);
+
+    return (
+      <View style={{width: 310}}>
+        <FlatList style={{ }}
+          ItemSeparatorComponent={ () => <View style={{ height: 2, backgroundColor: 'white' }}/> }          data={sortedRecipes}
+
+          renderItem={({item, index,}) => {
+            return(
+              <TouchableHighlight onPress={()=>handleView(index)} style={RecipesStyles.itemList}>
+
+                <View style={{flexDirection: 'row'}}>
+                  <View style={RecipesStyles.timeIconContainer}>
+                    <MaterialIcons name={ICON[item.category-1]} size={iconSizes.m} color={ICON_COLOR[item.category-1]} />
+                    <View >
+                      <Text style={{color: colors.textWhite, }}>
+                        {String(item.durationHours).padStart(2, '0')}h{String(item.durationMinutes).padStart(2, '0')}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={{height: 'auto'}}>
+                    <Text style={RecipesStyles.recipeName}>{ item.name }</Text>
+                  
+                    {
+                      !!item.description &&
+                      <Text style={{ fontSize: fontSizes.md, color: colors.textWhite }}>
+                        {item.description?.length > 35
+                          ? item.description.substring(0, 35) + '...'
+                          : item.description
+                        }
+                      </Text>
+                    }
+                    
+                  </View>           
+                </View>  
+              </TouchableHighlight>
+            )
+          }}
+        />       
+      </View>
+    );
+  }
+
+  const params = route.params
+
+  function handleLogout(){
+    return(     
+      navigation.replace('LoginScreen')   
+    );
+  }
 
   const [recipes, setRecipes] = useState([
- {
+    {
       category: "1",
       name: "Poutine",
       durationHours: 0,
@@ -132,16 +132,15 @@ export default function RecipesScreen({ navigation, route }){
   );
 
   function handleView(index) {
-
     if (recipes.length === 0) {
       return;
     } 
 
     navigation.navigate("RecipeScreen",{
-      recipe: recipes[index],
-      index: index
-    }
-  );
+        recipe: recipes[index],
+        index: index
+      }
+    );
   }
 
   function handleAdd() {
@@ -149,11 +148,14 @@ export default function RecipesScreen({ navigation, route }){
   }
 
   return(
-    <View style={[GlobalStyles.container,{justifyContent: 'flex-start'}]}>
+    <View style={[GlobalStyles.container,{justifyContent: 'flex-start', padding:0}]}>
       {list(sortedRecipes)}
-      <ButtonHighlight onPress={handleAdd} label={<FontAwesome6 name="add" size={30} color="white" />} styleText={{color: colors.move}} styleButton={{zIndex:10, position: 'absolute', end: 25, bottom:70, borderRadius: 999, height: 70, width: 70}}/>
+      <ButtonHighlight onPress={handleAdd} 
+        label={<FontAwesome6 name="add" size={iconSizes.xl} color="white" />} 
+        styleText={{color: colors.move}} 
+        styleButton={RecipesStyles.buttonAdd}
+      />
     </View>   
   );
-
 
 }

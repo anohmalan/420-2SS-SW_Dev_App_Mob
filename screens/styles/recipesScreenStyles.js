@@ -6,6 +6,11 @@ export const RecipesStyles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center'
   },
+  containerListVide:{
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   logoutButton:{
     backgroundColor: colors.transp,
     padding: 10,
@@ -23,4 +28,28 @@ export const RecipesStyles = StyleSheet.create({
     justifyContent: 'center', 
     gap: 10
   },
+  itemList:{
+    minHeight: 70, 
+    alignContent: 'center', 
+    justifyContent:'center'
+  },
+  timeIconContainer:{
+    alignItems: 'center', 
+    marginRight: 15, 
+    width: 60
+  },
+  recipeName:{
+    fontWeight: 'bold', 
+    flex: 1, color: colors.textWhite, 
+    fontSize: 16
+  },
+  buttonAdd:{
+    zIndex:10, 
+    position: 'absolute', 
+    end: 25, 
+    bottom:70, 
+    borderRadius: 999, 
+    height: 70, 
+    width: 70
+  }
 });

@@ -7,18 +7,20 @@ import { colors } from '../theme';
 import * as React from 'react';
 
 
-export default function LoginScren({ navigation }){
+export default function LoginScreen({ navigation }){
 
   React.useEffect(() => {
     navigation.setOptions({
       headerBackVisible: false,
     });
   });
+
   function handleLogin(){
     return(     
       navigation.replace('RecipesScreen')   
     );
   }
+
   function handleSignup(){
     return(     
       navigation.navigate('SignupScreen')   
