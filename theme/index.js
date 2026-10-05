@@ -16,16 +16,19 @@ export const spacings = {
   l: 1,
   s: 2,
   xs: 4,
-  xxs: 6,
+  xl: 10,
+  xxl: 20
 }
 
 export const fontSizes = {
   sm: 14,
-  md: 16,
+  md: 15,
   lg: 18,
-  xyz: 40
+  xyz: 40,
+  xxl: 48
 };
 
 export const iconSizes = {
-  xl: 32,
+  m: 24,
+  xl: 30,
 };

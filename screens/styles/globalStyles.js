@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colors, fontSizes } from "../../theme";
+import { colors, fontSizes,spacings } from "../../theme";
 
 export const GlobalStyles = StyleSheet.create({
   container: {
@@ -9,7 +9,7 @@ export const GlobalStyles = StyleSheet.create({
     justifyContent: 'center',
     height: 'auto',
     gap: "5%",
-    padding: 20
+    padding: spacings.xl
   },
   text: {
     fontSize: fontSizes.ml,

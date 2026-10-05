@@ -8,8 +8,8 @@ import { GlobalStyles } from "./styles/globalStyles";
 import { RecipeStyles } from './styles/recipeScreenStyles';
 import { PickerGenerator } from '../components/PickerGenerator';
 import { colors } from '../theme';
-import { Toast } from 'toastify-react-native'
-import * as CONST from '../constants/index'
+import { Toast } from 'toastify-react-native';
+import * as CONST from '../constants/index';
 
 export default function RecipeScreen({ navigation, route }){
   
