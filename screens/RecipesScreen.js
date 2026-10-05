@@ -31,8 +31,8 @@ export default function RecipesScreen({ navigation, route }){
   }
 
   return (
-    <View>
-         <FlatList
+    <View style={{width: 310}}>
+         <FlatList style={{ }}
           ItemSeparatorComponent={ () => <View style={{ height: 2, backgroundColor: 'white' }}/> }
         data={sortedRecipes}
 
@@ -40,7 +40,7 @@ export default function RecipesScreen({ navigation, route }){
           return(
             <TouchableHighlight onPress={()=>handleView(index)} style={{minHeight: 70, alignContent: 'center', justifyContent:'center'}}>
 
-              <View style={{flexDirection: 'row',}}>
+              <View style={{flexDirection: 'row'}}>
                 <View style={{alignItems: 'center', marginRight: 15, width: 60}}>
                   <MaterialIcons name={ICON[item.category-1]} size={24} color={colors.buttonPrimary} />
                   <View >
@@ -49,11 +49,13 @@ export default function RecipesScreen({ navigation, route }){
                 </View>
 
                 <View style={{height: 'auto'}}>
-                  <Text style={{ fontWeight: 'bold', flex: 1, verticalAlign: 'bottom', color: colors.textWhite, fontSize: 16}}>{ item.name }</Text>
+                  <Text style={{ fontWeight: 'bold', flex: 1, color: colors.textWhite, fontSize: 16}}>{ item.name }</Text>
+                
                   {
                     !!item.description &&
                       <Text style={ {fontSize: 15,color: colors.textWhite} }>{ item.description }</Text>
                   }
+                  
                 </View>
               
               </View>
@@ -101,7 +103,27 @@ export default function RecipesScreen({ navigation, route }){
   }, [params]);
 
   const [recipes, setRecipes] = useState([
-    
+ {
+      category: "1",
+      name: "Poutine",
+      durationHours: 0,
+      durationMinutes: 10,
+      description: "Frites, fromage en grain et sauce brune"
+    },
+    {
+      category: "2",
+      name: "Pizza",
+      durationHours: 1,
+      durationMinutes: 20,
+      description: "Pizza au fromage"
+    },
+    {
+      category: "3",
+      name: "Burger",
+      durationHours: 0,
+      durationMinutes: 30,
+      description: "Burger avec frites"
+    }
   ]);
 
   const sortedRecipes = [...recipes].sort((a, b) =>
@@ -126,7 +148,7 @@ export default function RecipesScreen({ navigation, route }){
   }
 
   return(
-    <View style={GlobalStyles.container}>
+    <View style={[GlobalStyles.container,{justifyContent: 'flex-start'}]}>
       {list(sortedRecipes)}
       <ButtonHighlight onPress={handleAdd} label={<FontAwesome6 name="add" size={30} color="white" />} styleText={{color: colors.move}} styleButton={{zIndex:10, position: 'absolute', end: 25, bottom:70, borderRadius: 999, height: 70, width: 70}}/>
     </View>   
