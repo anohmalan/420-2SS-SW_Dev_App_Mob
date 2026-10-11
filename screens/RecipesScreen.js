@@ -9,107 +9,14 @@ import { useState } from 'react';
 import * as React from 'react';
 
 export default function RecipesScreen({ navigation, route }){
-
-  React.useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (    
-        <ButtonHighlight label={"Log out"} 
-          styleText={{color: colors.textWhite}} 
-          styleButton={[RecipesStyles.logoutButton]}
-          onPress={handleLogout}
-        />
-      ),
-      headerBackVisible: false,
-    });
-  });
-
-  React.useEffect(() => 
-    {
-      const recipeIndex = params?.recipeIndex
-
-      if (params?.recipe) {
-        setRecipes([...recipes, params.recipe,]);
-      }
-      else if(toString(recipeIndex)){
-        setRecipes((currentRecipes) =>
-        currentRecipes.filter((_, index) => index !== recipeIndex));
-      }
-    }, [params]
-  );
-
-  function list(sortedRecipes) {
-    const ICON = ["free-breakfast",'dinner-dining','lunch-dining']
-    const ICON_COLOR = [colors.breakfast,colors.dinner, colors.lunch]
-    
-    if (sortedRecipes.length === 0) {
-      return (
-        <View
-          style={RecipesStyles.containerListVide}
-        >
-          <Text style={{ fontSize: fontSizes.xxl, color: colors.textWhite }}>
-            No recipes...
-          </Text>
-        </View>
-      );
-    }
-
-    return (
-      <View style={{width: 310}}>
-        <FlatList style={{ }}
-          ItemSeparatorComponent={ () => <View style={{ height: 2, backgroundColor: 'white' }}/> }          data={sortedRecipes}
-
-          renderItem={({item, index,}) => {
-            return(
-              <TouchableHighlight onPress={()=>handleView(index)} style={RecipesStyles.itemList}>
-
-                <View style={{flexDirection: 'row'}}>
-                  <View style={RecipesStyles.timeIconContainer}>
-                    <MaterialIcons name={ICON[item.category-1]} size={iconSizes.m} color={ICON_COLOR[item.category-1]} />
-                    <View >
-                      <Text style={{color: colors.textWhite, }}>
-                        {String(item.durationHours).padStart(2, '0')}h{String(item.durationMinutes).padStart(2, '0')}
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View style={{height: 'auto'}}>
-                    <Text style={RecipesStyles.recipeName}>{ item.name }</Text>
-                  
-                    {
-                      !!item.description &&
-                      <Text style={{ fontSize: fontSizes.md, color: colors.textWhite }}>
-                        {item.description?.length > 35
-                          ? item.description.substring(0, 35) + '...'
-                          : item.description
-                        }
-                      </Text>
-                    }
-                    
-                  </View>           
-                </View>  
-              </TouchableHighlight>
-            )
-          }}
-        />       
-      </View>
-    );
-  }
-
   const params = route.params
-
-  function handleLogout(){
-    return(     
-      navigation.replace('LoginScreen')   
-    );
-  }
-
   const [recipes, setRecipes] = useState([
     {
       category: "1",
       name: "Poutine",
       durationHours: 0,
       durationMinutes: 10,
-      description: "Frites, fromage en grain et sauce brune"
+      description: "Frites, fromage en grain et sauce brune, puis "
     },
     {
       category: "2",
@@ -126,18 +33,52 @@ export default function RecipesScreen({ navigation, route }){
       description: "Burger avec frites"
     }
   ]);
-
   const sortedRecipes = [...recipes].sort((a, b) =>
     a.name.localeCompare(b.name)
   );
 
-  function handleView(index) {
-    if (recipes.length === 0) {
-      return;
-    } 
+  // Bouton Logout
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (    
+        <ButtonHighlight label={"Log out"} 
+          styleText={{color: colors.textWhite}} 
+          styleButton={[RecipesStyles.logoutButton]}
+          onPress={handleLogout}
+        />
+      ),
+      headerBackVisible: false,
+    });
+  },[]);
 
+  //Ajout d'une recette
+  React.useEffect(() => {
+    const recipe = params?.recipe
+    if (recipe) {
+      setRecipes([...recipes, params.recipe]);
+    }
+  }, [params?.recipe]);
+
+  // Suppression d'un recette
+  React.useEffect(() => {
+    const recipeIndex = params?.recipeIndex;
+
+    if (recipeIndex !== undefined) {
+      setRecipes((currentRecipes) =>
+        currentRecipes.filter((_, index) => index !== Number(recipeIndex))
+      );
+    }
+  }, [params?.recipeIndex]);
+
+  function handleLogout(){
+    return(     
+      navigation.replace('LoginScreen')   
+    );
+  }
+
+  function handleView(index) {
     navigation.navigate("RecipeScreen",{
-        recipe: recipes[index],
+        recipe: sortedRecipes[index],
         index: index
       }
     );
@@ -145,6 +86,52 @@ export default function RecipesScreen({ navigation, route }){
 
   function handleAdd() {
     navigation.push("RecipeScreen");
+  }
+
+  function list(sortedRecipes) {
+    const ICON = ["free-breakfast",'dinner-dining','lunch-dining']
+    const ICON_COLOR = [colors.breakfast,colors.dinner, colors.lunch]
+  
+    return (
+      <View style={{width: "95%"}}>
+        <FlatList style={{ }}
+          ListEmptyComponent={
+            <Text style={{ fontSize: fontSizes.xyz, color: colors.textWhite }}>
+              No recipes...
+            </Text>
+          }
+          ItemSeparatorComponent={ () => <View style={{ height: 2, backgroundColor: 'white' }}/> }
+          data={sortedRecipes}
+
+          renderItem={({item, index,}) => {
+            return(
+              <TouchableHighlight onPress={()=>handleView(index)} style={RecipesStyles.itemList}>
+
+                <View style={{flexDirection: 'row'}}>
+                  <View style={RecipesStyles.timeIconContainer}>
+                    <MaterialIcons name={ICON[item.category-1]} size={iconSizes.m} color={ICON_COLOR[item.category-1]} />
+                    <View >
+                      <Text style={{color: colors.textWhite, }}>
+                        {item.durationHours}h{String(item.durationMinutes).padStart(2, '0')}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={{height: 'auto', flex:1}}>
+                    <Text style={RecipesStyles.recipeName}>{ item.name }</Text>
+                  
+                    <Text numberOfLines={1} ellipsizeMode="tail" style={{fontSize: fontSizes.md, color: colors.textWhite }} >
+                      {item.description}
+                    </Text>
+                    
+                  </View>           
+                </View>  
+              </TouchableHighlight>
+            )
+          }}
+        />       
+      </View>
+    );
   }
 
   return(

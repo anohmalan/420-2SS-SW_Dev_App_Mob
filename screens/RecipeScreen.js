@@ -28,13 +28,16 @@ export default function RecipeScreen({ navigation, route }){
       Toast.error('Durée supérieure à zéro requise', 'bottom')
     }
     else {
-      recipe.category = category;
-      recipe.name = name;
-      recipe.durationHours = durationHours;
-      recipe.durationMinutes = durationMinutes;
-      recipe.description = description;
+      const updatedRecipe = {
+        ...recipe,
+        category,
+        name,
+        durationHours,
+        durationMinutes,
+        description
+      };
       setRecipe(CONST.EMPTY_RECIPE());
-      navigation.popTo("RecipesScreen",{recipe: recipe});
+      navigation.popTo("RecipesScreen",{recipe: updatedRecipe});
     }
   }
 
