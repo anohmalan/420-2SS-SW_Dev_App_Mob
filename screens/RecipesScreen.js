@@ -105,7 +105,7 @@ export default function RecipesScreen({ navigation, route }){
 
           renderItem={({item, index,}) => {
             return(
-              <TouchableHighlight onPress={()=>handleView(index)} style={RecipesStyles.itemList}>
+              <TouchableHighlight onPress={()=>handleView(index)} underlayColor={colors.press} style={RecipesStyles.itemList}>
 
                 <View style={{flexDirection: 'row'}}>
                   <View style={RecipesStyles.timeIconContainer}>

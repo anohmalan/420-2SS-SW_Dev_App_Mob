@@ -9,7 +9,8 @@ export const colors = {
   breakfast: "#F2A93B",
   dinner: "#00008B",
   lunch: "#02FF00",
-  transp: "transparent"
+  transp: "transparent",
+  press : "#ffffff42"
 }
 
 export const spacings = {
