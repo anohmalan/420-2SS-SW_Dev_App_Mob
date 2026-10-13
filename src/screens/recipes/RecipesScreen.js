@@ -1,8 +1,8 @@
 import { View, Text, FlatList, TouchableHighlight } from 'react-native';
-import { ButtonHighlight } from "../components/ButtonHighlight";
-import { RecipesStyles } from './styles/recipesScreenStyles';
-import { colors,iconSizes,fontSizes } from '../theme';
-import { GlobalStyles } from "./styles/globalStyles";
+import { ButtonHighlight } from "../../components/ButtonHighlight";
+import { RecipesStyles } from '../styles/recipesScreenStyles';
+import { colors,iconSizes,fontSizes } from '../../theme';
+import { GlobalStyles } from "../styles/globalStyles";
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useState } from 'react';

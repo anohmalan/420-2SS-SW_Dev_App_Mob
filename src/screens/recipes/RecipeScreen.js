@@ -1,15 +1,15 @@
 import { View } from 'react-native';
 import { useState } from 'react';
 import   RadioGroup from 'react-native-radio-buttons-group';
-import { TextComponent } from '../components/TextComponent';
-import { InputRect } from "../components/InputRect";
-import { ButtonHighlight } from "../components/ButtonHighlight";
-import { GlobalStyles } from "./styles/globalStyles";
-import { RecipeStyles } from './styles/recipeScreenStyles';
-import { PickerGenerator } from '../components/PickerGenerator';
-import { colors } from '../theme';
+import { TextComponent } from '../../components/TextComponent';
+import { InputRect } from "../../components/InputRect";
+import { ButtonHighlight } from "../../components/ButtonHighlight";
+import { GlobalStyles } from "../styles/globalStyles";
+import { RecipeStyles } from '../styles/recipeScreenStyles';
+import { PickerGenerator } from '../../components/PickerGenerator';
+import { colors } from '../../theme';
 import { Toast } from 'toastify-react-native';
-import * as CONST from '../constants/index';
+import * as CONST from '../../constants/index';
 
 export default function RecipeScreen({ navigation, route }){
   

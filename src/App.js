@@ -2,10 +2,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { colors } from './theme';
 import { StatusBar } from 'expo-status-bar';
-import LoginScreen from './screens/LoginScreen';
-import SignupScreen from './screens/SignupScreen';
-import RecipeScreen from './screens/RecipeScreen';
-import RecipesScreen from './screens/RecipesScreen';
+import LoginScreen from './screens/auth/LoginScreen';
+import SignupScreen from './screens/auth/SignupScreen';
+import RecipeScreen from './screens/recipes/RecipeScreen';
+import RecipesScreen from './screens/recipes/RecipesScreen';
 import ToastManager from 'toastify-react-native'
 
 const Stack = createNativeStackNavigator();
