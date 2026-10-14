@@ -7,9 +7,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useState } from 'react';
 import * as React from 'react';
+import auth from '../../services/auth'
 
 export default function RecipesScreen({ navigation, route }){
+  const user = auth.currentUser.id
   const params = route.params
+  console.log(`Le user actuel est: ${user}`)
   const [recipes, setRecipes] = useState([
     {
       category: "1",
