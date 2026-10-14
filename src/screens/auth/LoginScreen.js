@@ -20,13 +20,9 @@ export default function LoginScreen({ navigation }){
   });
 
   async function handleLogin(){   
-    console.log({credentials})
     const success = await auth.logIn(credentials);
 
-    console.log({success, user: auth.currentUser})
-
     setUser(auth.currentUser)
-    console.log(auth.currentUser)
     setCredentials(new UserCredentials({username: '', password: ''}))
     if(success){
       navigation.replace('RecipesScreen') 

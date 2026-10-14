@@ -11,10 +11,10 @@ export default class User {
   }
 
   toJSON() {
-      return {
-          id: this.#id,
-          ...this
-      }
+    return {
+        id: this.#id,
+        ...this
+    }
   }
 
 }
