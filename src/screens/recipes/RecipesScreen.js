@@ -7,35 +7,50 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useState } from 'react';
 import * as React from 'react';
-import auth from '../../services/auth'
+import { RecipeService } from '../../services/recipe';
 
 export default function RecipesScreen({ navigation, route }){
-  const user = auth.currentUser.id
   const params = route.params
-  console.log(`Le user actuel est: ${user}`)
-  const [recipes, setRecipes] = useState([
-    {
-      category: "1",
-      name: "Poutine",
-      durationHours: 0,
-      durationMinutes: 10,
-      description: "Frites, fromage en grain et sauce brune, puis "
-    },
-    {
-      category: "2",
-      name: "Pizza",
-      durationHours: 1,
-      durationMinutes: 20,
-      description: "Pizza au fromage"
-    },
-    {
-      category: "3",
-      name: "Burger",
-      durationHours: 0,
-      durationMinutes: 30,
-      description: "Burger avec frites"
+  // const [recipes, setRecipes] = useState([
+  //   {
+  //     category: "1",
+  //     name: "Poutine",
+  //     durationHours: 0,
+  //     durationMinutes: 10,
+  //     description: "Frites, fromage en grain et sauce brune, puis "
+  //   },
+  //   {
+  //     category: "2",
+  //     name: "Pizza",
+  //     durationHours: 1,
+  //     durationMinutes: 20,
+  //     description: "Pizza au fromage"
+  //   },
+  //   {
+  //     category: "3",
+  //     name: "Burger",
+  //     durationHours: 0,
+  //     durationMinutes: 30,
+  //     description: "Burger avec frites"
+  //   }
+  // ]);
+ 
+  const [recipes, setRecipes] = useState([]);
+  const recipeService = new RecipeService();
+
+  React.useEffect(() => {
+    async function loadRecipes() {
+      try {
+        const recipes = await recipeService.selectAll();
+        setRecipes(recipes);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  ]);
+
+    loadRecipes();
+  }, []);
+ 
   const sortedRecipes = [...recipes].sort((a, b) =>
     a.name.localeCompare(b.name)
   );
@@ -79,10 +94,10 @@ export default function RecipesScreen({ navigation, route }){
     );
   }
 
-  function handleView(index) {
+  function handleView(itemId) {
+    const recipe = recipes.find((recipe) => recipe.id === Number(itemId));
     navigation.navigate("RecipeScreen",{
-        recipe: sortedRecipes[index],
-        index: index
+        recipe: recipe,
       }
     );
   }
@@ -108,14 +123,14 @@ export default function RecipesScreen({ navigation, route }){
 
           renderItem={({item, index,}) => {
             return(
-              <TouchableHighlight onPress={()=>handleView(index)} underlayColor={colors.press} style={RecipesStyles.itemList}>
+              <TouchableHighlight onPress={()=>handleView(item.id)} underlayColor={colors.press} style={RecipesStyles.itemList}>
 
                 <View style={{flexDirection: 'row'}}>
                   <View style={RecipesStyles.timeIconContainer}>
                     <MaterialIcons name={ICON[item.category-1]} size={iconSizes.m} color={ICON_COLOR[item.category-1]} />
                     <View >
                       <Text style={{color: colors.textWhite, }}>
-                        {item.durationHours}h{String(item.durationMinutes).padStart(2, '0')}
+                        {item.duration_hours}h{String(item.duration_minutes).padStart(2, '0')}
                       </Text>
                     </View>
                   </View>

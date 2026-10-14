@@ -79,15 +79,15 @@ export default function RecipeScreen({ navigation, route }){
   };
 
   const options = CONST.CATEGORIES.map((meal, index) => ({
-    id: String(index + 1),
+    id: index + 1,
     label: meal.label,
     value: meal.value,
     color: colors.second
   }));
 
   const [name, setName] = useState(recipe.name);
-  const [durationHours, setDurationHours] = useState(recipe.durationHours ?? 0);
-  const [durationMinutes, setDurationMinutes] = useState(recipe.durationMinutes ?? 0);
+  const [durationHours, setDurationHours] = useState(recipe.duration_hours ?? 0);
+  const [durationMinutes, setDurationMinutes] = useState(recipe.duration_minutes ?? 0);
   const [description, setDescription] = useState(recipe.description ?? "");
   const [category, setCategory] = useState(!!recipe.category && recipe.category);
 
