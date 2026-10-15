@@ -22,6 +22,7 @@ export class RecipeService{
             }),
         }).then((r) => r.json())
 
+        console.log(response)
         if (response.success) {
 
             this.#recipes = response.data.map((item) => new Recipe({
@@ -32,11 +33,8 @@ export class RecipeService{
             duration_minutes: item.duration_minutes,
             description: item.description,
             }));
-            console.log(JSON.stringify(this.#recipes))
         }else{
-
-            throw new Error('Impossible de récupérer les recettes');
-
+            this.#recipes = null
         }
 
         return this.#recipes;

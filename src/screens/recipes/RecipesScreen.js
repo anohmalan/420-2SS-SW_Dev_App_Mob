@@ -3,11 +3,12 @@ import { ButtonHighlight } from "../../components/ButtonHighlight";
 import { RecipesStyles } from '../styles/recipesScreenStyles';
 import { colors,iconSizes,fontSizes } from '../../theme';
 import { GlobalStyles } from "../styles/globalStyles";
-import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useState } from 'react';
 import * as React from 'react';
 import { RecipeService } from '../../services/recipe';
+import RecipeItem from './RecipeItem';
+import { Toast } from 'toastify-react-native';
 
 export default function RecipesScreen({ navigation, route }){
   const params = route.params
@@ -38,12 +39,14 @@ export default function RecipesScreen({ navigation, route }){
   const [recipes, setRecipes] = useState([]);
   const recipeService = new RecipeService();
 
+  // Charger les recettes d'un User
   React.useEffect(() => {
     async function loadRecipes() {
       try {
         const recipes = await recipeService.selectAll();
         setRecipes(recipes);
       } catch (error) {
+        Toast.error("Impossible de charger les recettes",bottom)
         console.error(error);
       }
     }
@@ -89,15 +92,19 @@ export default function RecipesScreen({ navigation, route }){
   }, [params?.recipeIndex]);
 
   function handleLogout(){
-    return(     
-      navigation.replace('LoginScreen')   
-    );
+
+    auth.logOut()
+
+    setUser(auth.currentUser)
+    // return(     
+    //   navigation.replace('LoginScreen')   
+    // );
   }
 
-  function handleView(itemId) {
-    const recipe = recipes.find((recipe) => recipe.id === Number(itemId));
-    navigation.navigate("RecipeScreen",{
-        recipe: recipe,
+  function handleView(item) {
+    navigation.navigate("RecipeScreen",
+      {
+        recipe: item,
       }
     );
   }
@@ -107,9 +114,6 @@ export default function RecipesScreen({ navigation, route }){
   }
 
   function list(sortedRecipes) {
-    const ICON = ["free-breakfast",'dinner-dining','lunch-dining']
-    const ICON_COLOR = [colors.breakfast,colors.dinner, colors.lunch]
-  
     return (
       <View style={{width: "95%"}}>
         <FlatList style={{ }}
@@ -121,29 +125,10 @@ export default function RecipesScreen({ navigation, route }){
           ItemSeparatorComponent={ () => <View style={{ height: 2, backgroundColor: 'white' }}/> }
           data={sortedRecipes}
 
-          renderItem={({item, index,}) => {
+          renderItem={({item}) => {
             return(
-              <TouchableHighlight onPress={()=>handleView(item.id)} underlayColor={colors.press} style={RecipesStyles.itemList}>
-
-                <View style={{flexDirection: 'row'}}>
-                  <View style={RecipesStyles.timeIconContainer}>
-                    <MaterialIcons name={ICON[item.category-1]} size={iconSizes.m} color={ICON_COLOR[item.category-1]} />
-                    <View >
-                      <Text style={{color: colors.textWhite, }}>
-                        {item.duration_hours}h{String(item.duration_minutes).padStart(2, '0')}
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View style={{height: 'auto', flex:1}}>
-                    <Text style={RecipesStyles.recipeName}>{ item.name }</Text>
-                  
-                    <Text numberOfLines={1} ellipsizeMode="tail" style={{fontSize: fontSizes.md, color: colors.textWhite }} >
-                      {item.description}
-                    </Text>
-                    
-                  </View>           
-                </View>  
+              <TouchableHighlight onPress={()=>handleView(item)} underlayColor={colors.press} style={RecipesStyles.itemList}>
+                <RecipeItem item={item}/>
               </TouchableHighlight>
             )
           }}
