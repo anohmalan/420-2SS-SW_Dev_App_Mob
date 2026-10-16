@@ -25,6 +25,7 @@ export default function LoginScreen({ navigation }){
     setUser(auth.currentUser)
     setCredentials(new UserCredentials({username: '', password: ''}))
     if(success){
+      console.log(auth.currentUser.id)
       navigation.replace('RecipesScreen') 
     }else{
       Toast.error("Nom d'utilisateur ou mot de passe incorrect", 'bottom')

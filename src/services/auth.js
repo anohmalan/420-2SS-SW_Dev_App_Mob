@@ -10,6 +10,10 @@ export class AuthService {
         return this.#currentUser
     }
 
+    set currentUser(value){
+        this.#currentUser = value
+    }
+
     async signUp(credentials) {
         const response = await fetch("http://martha.jh.shawinigan.info/queries/insert-user/execute", {
             method: 'POST',
@@ -47,11 +51,12 @@ export class AuthService {
         return !!this.#currentUser
     }
 
-    logOut() {
-      this.#currentUser = null
+    logOut() {       
+        this.currentUser = null
+        console.log('AuthService :', this.currentUser);
     }
 
 }
 
-const service = new AuthService();
-export default service;
+const auth = new AuthService();
+export default auth;

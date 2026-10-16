@@ -22,9 +22,7 @@ export class RecipeService{
             }),
         }).then((r) => r.json())
 
-        console.log(response)
         if (response.success) {
-
             this.#recipes = response.data.map((item) => new Recipe({
             id: item.id,
             category: item.category,
@@ -38,6 +36,9 @@ export class RecipeService{
         }
 
         return this.#recipes;
-    }
+    } 
   
 }
+
+// const recipe = new RecipeService();
+// export default recipe;

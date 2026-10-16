@@ -6,51 +6,20 @@ import { GlobalStyles } from "../styles/globalStyles";
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useState } from 'react';
 import * as React from 'react';
-import { RecipeService } from '../../services/recipe';
 import RecipeItem from './RecipeItem';
 import { Toast } from 'toastify-react-native';
+import auth from '../../services/auth'
+import {RecipeService} from '../../services/recipe';
+
+
 
 export default function RecipesScreen({ navigation, route }){
   const params = route.params
-  // const [recipes, setRecipes] = useState([
-  //   {
-  //     category: "1",
-  //     name: "Poutine",
-  //     durationHours: 0,
-  //     durationMinutes: 10,
-  //     description: "Frites, fromage en grain et sauce brune, puis "
-  //   },
-  //   {
-  //     category: "2",
-  //     name: "Pizza",
-  //     durationHours: 1,
-  //     durationMinutes: 20,
-  //     description: "Pizza au fromage"
-  //   },
-  //   {
-  //     category: "3",
-  //     name: "Burger",
-  //     durationHours: 0,
-  //     durationMinutes: 30,
-  //     description: "Burger avec frites"
-  //   }
-  // ]);
- 
   const [recipes, setRecipes] = useState([]);
-  const recipeService = new RecipeService();
+  const recipe = new RecipeService();
 
   // Charger les recettes d'un User
   React.useEffect(() => {
-    async function loadRecipes() {
-      try {
-        const recipes = await recipeService.selectAll();
-        setRecipes(recipes);
-      } catch (error) {
-        Toast.error("Impossible de charger les recettes",bottom)
-        console.error(error);
-      }
-    }
-
     loadRecipes();
   }, []);
  
@@ -91,14 +60,18 @@ export default function RecipesScreen({ navigation, route }){
     }
   }, [params?.recipeIndex]);
 
+  async function loadRecipes() {
+    try {
+      const recipes = await recipe.selectAll();
+      setRecipes(recipes);
+    } catch (error) {
+      Toast.error("Impossible de charger les recettes",bottom)
+    }
+  }
+
   function handleLogout(){
-
-    auth.logOut()
-
-    setUser(auth.currentUser)
-    // return(     
-    //   navigation.replace('LoginScreen')   
-    // );
+    auth.logOut()   
+    navigation.replace('LoginScreen')   
   }
 
   function handleView(item) {
