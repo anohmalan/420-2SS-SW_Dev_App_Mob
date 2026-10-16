@@ -58,6 +58,23 @@ export class RecipeService{
 
         return response;
     }
+
+    async delete(recipe){
+        const response = await fetch(
+        'http://martha.jh.shawinigan.info/queries/delete-recipe/execute',{
+            method: 'POST',
+            headers: {
+            auth: this.#AUTH,
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: recipe.id,
+                user_id: this.#currentUser
+            }),
+        }).then((r) => r.json())
+
+        return response;
+    }
   
 }
 

@@ -38,9 +38,9 @@ export default function RecipeScreen({ navigation, route }){
       };
 
       try {
-        const newRecipes = await recipeService.add(updatedRecipe);
+        const newRecipe = await recipeService.add(updatedRecipe);
 
-        updatedRecipe.id = newRecipes.lastInsertId;
+        updatedRecipe.id = newRecipe.lastInsertId;
 
         setRecipe(CONST.EMPTY_RECIPE());
 
@@ -57,11 +57,21 @@ export default function RecipeScreen({ navigation, route }){
   }
 
 
-  function handleDelete(){
+  async function handleDelete(){
     // const INDEX = PARAMS.index;
     // navigation.popTo("RecipesScreen",{recipeIndex: INDEX});
-    navigation.popTo("RecipesScreen")
+          try {
+        const deleteRecipe = await recipeService.delete(recipe);
+
+        navigation.popTo("RecipesScreen",{recipe_to_delete: recipe});
+
+        Toast.success('Recette supprimée avec succès');
+      } catch (error) {
+        console.error(error);
+        Toast.error('Impossible de supprimer la recette', 'bottom');
+      }
   }
+  
   function buttonSaveDelete(){
     return(
       <>

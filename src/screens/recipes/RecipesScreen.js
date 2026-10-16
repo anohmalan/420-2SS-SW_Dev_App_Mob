@@ -51,14 +51,13 @@ export default function RecipesScreen({ navigation, route }){
 
   // Suppression d'un recette
   React.useEffect(() => {
-    const recipeIndex = params?.recipeIndex;
-
-    if (recipeIndex !== undefined) {
+    const recipe_to_delete = params?.recipe_to_delete;
+    if (recipe_to_delete) {
       setRecipes((currentRecipes) =>
-        currentRecipes.filter((_, index) => index !== Number(recipeIndex))
+        currentRecipes.filter((recipe) => recipe.id !== Number(recipe_to_delete.id))
       );
     }
-  }, [params?.recipeIndex]);
+  }, [params?.recipe_to_delete]);
 
   async function loadRecipes() {
     try {
