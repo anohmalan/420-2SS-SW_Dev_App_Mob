@@ -37,6 +37,27 @@ export class RecipeService{
 
         return this.#recipes;
     } 
+
+    async add(recipe){
+        const response = await fetch(
+        'http://martha.jh.shawinigan.info/queries/insert-recipe/execute',{
+            method: 'POST',
+            headers: {
+            auth: this.#AUTH,
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+            category: recipe.category,
+            name: recipe.name,
+            duration_hours: recipe.duration_hours,
+            duration_minutes: recipe.duration_minutes,
+            description: recipe.description,
+            user_id: this.#currentUser,
+            }),
+        }).then((r) => r.json())
+
+        return response;
+    }
   
 }
 

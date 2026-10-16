@@ -1,9 +1,10 @@
 export const EMPTY_RECIPE = () => { 
   return {
+    id: null,
     category: null,
     name: null,
-    durationHours: null,
-    durationMinutes: null,
+    duration_hours: null,
+    duration_minutes: null,
     description: null
   }
 }

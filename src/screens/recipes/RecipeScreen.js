@@ -10,36 +10,52 @@ import { PickerGenerator } from '../../components/PickerGenerator';
 import { colors } from '../../theme';
 import { Toast } from 'toastify-react-native';
 import * as CONST from '../../constants/index';
+import { RecipeService } from '../../services/recipe';
 
 export default function RecipeScreen({ navigation, route }){
   
   const PARAMS = route.params
 
   const [recipe, setRecipe] = useState(PARAMS?.recipe ?? CONST.EMPTY_RECIPE())
+  const recipeService = new RecipeService()
 
-  function handleAdd() {
-    if ((name?.trim() ?? '') == '') {
-      Toast.error('Nom requis', 'bottom')
-    }
-    else if(category == false){
-      Toast.error('Catégorie requise', 'bottom')
-    }
-    else if(durationHours + durationMinutes == 0){
-      Toast.error('Durée supérieure à zéro requise', 'bottom')
-    }
-    else {
+  
+  async function handleAdd() {
+    if ((name?.trim() ?? '') === '') {
+      Toast.error('Nom requis', 'bottom');
+    } else if (category === false) {
+      Toast.error('Catégorie requise', 'bottom');
+    } else if (duration_hours + duration_minutes === 0) {
+      Toast.error('Durée supérieure à zéro requise', 'bottom');
+    } else {
       const updatedRecipe = {
         ...recipe,
         category,
-        name,
-        durationHours,
-        durationMinutes,
-        description
+        name: name.trim(),
+        duration_hours,
+        duration_minutes,
+        description,
       };
-      setRecipe(CONST.EMPTY_RECIPE());
-      navigation.popTo("RecipesScreen",{recipe: updatedRecipe});
+
+      try {
+        const newRecipes = await recipeService.add(updatedRecipe);
+
+        updatedRecipe.id = newRecipes.lastInsertId;
+
+        setRecipe(CONST.EMPTY_RECIPE());
+
+        navigation.popTo('RecipesScreen', {
+          recipe: updatedRecipe,
+        });
+
+        Toast.success('Recette ajoutée avec succès');
+      } catch (error) {
+        console.error(error);
+        Toast.error('Impossible d’ajouter la recette', 'bottom');
+      }
     }
   }
+
 
   function handleDelete(){
     // const INDEX = PARAMS.index;
@@ -70,10 +86,10 @@ export default function RecipeScreen({ navigation, route }){
   const handleDurationChange = (value, index) => {
     switch (index) {
       case 1:
-        setDurationMinutes(value);
+        setDuration_minutes(value);
         break; 
       default:
-        setDurationHours(value);
+        setDuration_hours(value);
         break;
     };
   };
@@ -86,8 +102,8 @@ export default function RecipeScreen({ navigation, route }){
   }));
 
   const [name, setName] = useState(recipe.name);
-  const [durationHours, setDurationHours] = useState(recipe.duration_hours ?? 0);
-  const [durationMinutes, setDurationMinutes] = useState(recipe.duration_minutes ?? 0);
+  const [duration_hours, setDuration_hours] = useState(recipe.duration_hours ?? 0);
+  const [duration_minutes, setDuration_minutes] = useState(recipe.duration_minutes ?? 0);
   const [description, setDescription] = useState(recipe.description ?? "");
   const [category, setCategory] = useState(!!recipe.category && recipe.category);
 
@@ -113,7 +129,7 @@ export default function RecipeScreen({ navigation, route }){
         <View style={{ flex: 1 }}>
           <PickerGenerator 
             onValueChange={handleDurationChange} 
-            ITEM_OPTIONS = {CONST.PICKER_OPTIONS} duration= {[durationHours,durationMinutes]}/>
+            ITEM_OPTIONS = {CONST.PICKER_OPTIONS} duration= {[duration_hours,duration_minutes]}/>
         </View>
       
       </View>

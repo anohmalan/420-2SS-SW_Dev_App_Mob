@@ -101,7 +101,7 @@ export default function RecipesScreen({ navigation, route }){
           renderItem={({item}) => {
             return(
               <TouchableHighlight onPress={()=>handleView(item)} underlayColor={colors.press} style={RecipesStyles.itemList}>
-                <RecipeItem item={item}/>
+                <RecipeItem item={item}key={item.id}/>
               </TouchableHighlight>
             )
           }}
