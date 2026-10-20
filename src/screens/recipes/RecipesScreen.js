@@ -41,11 +41,24 @@ export default function RecipesScreen({ navigation, route }){
     });
   },[]);
 
-  //Ajout d'une recette
+  //Ajout ou Mise à jour d'une recette
   React.useEffect(() => {
-    const recipe = params?.recipe
+    const recipe = params?.recipe;
+
     if (recipe) {
-      setRecipes([...recipes, params.recipe]);
+      const existRecipe = recipes.find(
+        (r) => r.id === Number(recipe.id)
+      );
+
+      if (existRecipe) {
+        setRecipes(
+          recipes.map((r) =>
+            r.id === Number(recipe.id) ? recipe : r
+          )
+        );
+      } else {
+        setRecipes([...recipes, recipe]);
+      }
     }
   }, [params?.recipe]);
 

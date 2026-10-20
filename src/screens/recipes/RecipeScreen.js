@@ -19,6 +19,25 @@ export default function RecipeScreen({ navigation, route }){
   const [recipe, setRecipe] = useState(PARAMS?.recipe ?? CONST.EMPTY_RECIPE())
   const recipeService = new RecipeService()
 
+  // function verifValue(){
+  //   if ((name?.trim() ?? '') === '') {
+  //     Toast.error('Nom requis', 'bottom');
+  //   } else if (category === false) {
+  //     Toast.error('Catégorie requise', 'bottom');
+  //   } else if (duration_hours + duration_minutes === 0) {
+  //     Toast.error('Durée supérieure à zéro requise', 'bottom');
+  //   } else {
+  //     const updatedRecipe = {
+  //       ...recipe,
+  //       category,
+  //       name: name.trim(),
+  //       duration_hours,
+  //       duration_minutes,
+  //       description,
+  //     };
+  //   }
+  //   return updatedRecipe;
+  // }
   
   async function handleAdd() {
     if ((name?.trim() ?? '') === '') {
@@ -28,7 +47,7 @@ export default function RecipeScreen({ navigation, route }){
     } else if (duration_hours + duration_minutes === 0) {
       Toast.error('Durée supérieure à zéro requise', 'bottom');
     } else {
-      const updatedRecipe = {
+      const addRecipe = {
         ...recipe,
         category,
         name: name.trim(),
@@ -38,9 +57,47 @@ export default function RecipeScreen({ navigation, route }){
       };
 
       try {
-        const newRecipe = await recipeService.add(updatedRecipe);
+        const newRecipe = await recipeService.add(addRecipe);
 
-        updatedRecipe.id = newRecipe.lastInsertId;
+        addRecipe.id = newRecipe.lastInsertId;
+
+        setRecipe(CONST.EMPTY_RECIPE());
+
+        navigation.popTo('RecipesScreen', {
+          recipe: addRecipe,
+        });
+
+        Toast.success('Recette ajoutée avec succès');
+      } catch (error) {
+        console.error(error);
+        Toast.error('Impossible d’ajouter la recette', 'bottom');
+      }
+    }
+  }
+
+  async function handleSave() {
+    if ((name?.trim() ?? '') === '') {
+      Toast.error('Nom requis', 'bottom');
+    } else if (category === false) {
+      Toast.error('Catégorie requise', 'bottom');
+    } else if (duration_hours + duration_minutes === 0) {
+      Toast.error('Durée supérieure à zéro requise', 'bottom');
+    } else {
+      const updatedRecipe = {
+        ...recipe,
+        id: recipe.id,
+        category,
+        name: name.trim(),
+        duration_hours,
+        duration_minutes,
+        description,
+      };
+
+      console.log(updatedRecipe.id)
+
+      try {
+
+        const newRecipe = await recipeService.update(updatedRecipe);
 
         setRecipe(CONST.EMPTY_RECIPE());
 
@@ -48,10 +105,10 @@ export default function RecipeScreen({ navigation, route }){
           recipe: updatedRecipe,
         });
 
-        Toast.success('Recette ajoutée avec succès');
+        Toast.success('Recette modifiée avec succès');
       } catch (error) {
         console.error(error);
-        Toast.error('Impossible d’ajouter la recette', 'bottom');
+        Toast.error('Impossible de modifier la recette', 'bottom');
       }
     }
   }
@@ -77,13 +134,20 @@ export default function RecipeScreen({ navigation, route }){
       <>
         {PARAMS?.recipe ? 
           (
+            <View style={{flex: 1, flexDirection: 'row', gap: 10}}>
+              <ButtonHighlight
+                label="Delete"
+                styleButton={[GlobalStyles.bouton, RecipeStyles.deleteButton]}
+                onPress={handleDelete}
+              />
+              <ButtonHighlight
+                label="Save"
+                styleButton={[GlobalStyles.bouton, RecipeStyles.saveButton]}
+                onPress={handleSave}
+              />
+            </View> ) : (
             <ButtonHighlight
-              label="Delete"
-              styleButton={[GlobalStyles.bouton, RecipeStyles.deleteButton]}
-              onPress={handleDelete}
-            /> ) : (
-            <ButtonHighlight
-              label="Save"
+              label="Add"
               styleButton={[GlobalStyles.bouton, RecipeStyles.saveButton]}
               onPress={handleAdd}
             />
