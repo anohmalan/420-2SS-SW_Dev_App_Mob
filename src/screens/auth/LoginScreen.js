@@ -11,7 +11,6 @@ import { Toast } from 'toastify-react-native';
 
 
 export default function LoginScreen({ navigation }){
-  const [user, setUser] = React.useState()
   const [credentials, setCredentials] = React.useState(new UserCredentials({username: '', password: ''}))
   React.useEffect(() => {
     navigation.setOptions({

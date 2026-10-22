@@ -11,113 +11,83 @@ import { colors } from '../../theme';
 import { Toast } from 'toastify-react-native';
 import * as CONST from '../../constants/index';
 import { RecipeService } from '../../services/recipe';
+import Recipe from '../../models/recipe'
 
 export default function RecipeScreen({ navigation, route }){
   
   const PARAMS = route.params
 
-  const [recipe, setRecipe] = useState(PARAMS?.recipe ?? CONST.EMPTY_RECIPE())
+  const [recipe, setRecipe] = useState(() => new Recipe(PARAMS?.recipe))
   const recipeService = new RecipeService()
 
-  // function verifValue(){
-  //   if ((name?.trim() ?? '') === '') {
-  //     Toast.error('Nom requis', 'bottom');
-  //   } else if (category === false) {
-  //     Toast.error('Catégorie requise', 'bottom');
-  //   } else if (duration_hours + duration_minutes === 0) {
-  //     Toast.error('Durée supérieure à zéro requise', 'bottom');
-  //   } else {
-  //     const updatedRecipe = {
-  //       ...recipe,
-  //       category,
-  //       name: name.trim(),
-  //       duration_hours,
-  //       duration_minutes,
-  //       description,
-  //     };
-  //   }
-  //   return updatedRecipe;
-  // }
-  
+  function updateRecipe(field, value) {
+    setRecipe((currentRecipe) => {
+      const updatedRecipe = new Recipe(currentRecipe);
+      updatedRecipe[field] = value;
+      return updatedRecipe;
+    });
+  }
+
+  function validRecipe() {
+    const formRecipe = new Recipe(recipe);
+    formRecipe.duration_hours ??= 0;
+    formRecipe.duration_minutes ??= 0;
+    formRecipe.description ??= '';
+    formRecipe.name = formRecipe.name.trim();
+
+    const errorMessage = formRecipe.validate();
+    if (errorMessage) {
+      Toast.error(errorMessage, 'bottom');
+      return null;
+    }
+
+    return formRecipe;
+  }
+
   async function handleAdd() {
-    if ((name?.trim() ?? '') === '') {
-      Toast.error('Nom requis', 'bottom');
-    } else if (category === false) {
-      Toast.error('Catégorie requise', 'bottom');
-    } else if (duration_hours + duration_minutes === 0) {
-      Toast.error('Durée supérieure à zéro requise', 'bottom');
-    } else {
-      const addRecipe = {
-        ...recipe,
-        category,
-        name: name.trim(),
-        duration_hours,
-        duration_minutes,
-        description,
-      };
+    const addRecipe = validRecipe();
+    if (!addRecipe) return;
 
-      try {
-        const newRecipe = await recipeService.add(addRecipe);
+    try {
+      const response = await recipeService.add(addRecipe);
+      addRecipe.id = response.lastInsertId;
 
-        addRecipe.id = newRecipe.lastInsertId;
+      setRecipe(new Recipe());
 
-        setRecipe(CONST.EMPTY_RECIPE());
+      navigation.popTo('RecipesScreen', {
+        recipe: addRecipe,
+      });
 
-        navigation.popTo('RecipesScreen', {
-          recipe: addRecipe,
-        });
-
-        Toast.success('Recette ajoutée avec succès');
-      } catch (error) {
-        console.error(error);
-        Toast.error('Impossible d’ajouter la recette', 'bottom');
-      }
+      Toast.success('Recette ajoutée avec succès');
+    } catch (error) {
+      console.error(error);
+      Toast.error('Impossible d’ajouter la recette', 'bottom');
     }
   }
 
   async function handleSave() {
-    if ((name?.trim() ?? '') === '') {
-      Toast.error('Nom requis', 'bottom');
-    } else if (category === false) {
-      Toast.error('Catégorie requise', 'bottom');
-    } else if (duration_hours + duration_minutes === 0) {
-      Toast.error('Durée supérieure à zéro requise', 'bottom');
-    } else {
-      const updatedRecipe = {
-        ...recipe,
-        id: recipe.id,
-        category,
-        name: name.trim(),
-        duration_hours,
-        duration_minutes,
-        description,
-      };
+    const updatedRecipe = validRecipe();
+    if (!updatedRecipe) return;
 
-      console.log(updatedRecipe.id)
+    try {
+      await recipeService.update(updatedRecipe);
 
-      try {
+      setRecipe(new Recipe());
 
-        const newRecipe = await recipeService.update(updatedRecipe);
+      navigation.popTo('RecipesScreen', {
+        recipe: updatedRecipe,
+      });
 
-        setRecipe(CONST.EMPTY_RECIPE());
-
-        navigation.popTo('RecipesScreen', {
-          recipe: updatedRecipe,
-        });
-
-        Toast.success('Recette modifiée avec succès');
-      } catch (error) {
-        console.error(error);
-        Toast.error('Impossible de modifier la recette', 'bottom');
-      }
+      Toast.success('Recette modifiée avec succès');
+    } catch (error) {
+      console.error(error);
+      Toast.error('Impossible de modifier la recette', 'bottom');
     }
   }
 
 
   async function handleDelete(){
-    // const INDEX = PARAMS.index;
-    // navigation.popTo("RecipesScreen",{recipeIndex: INDEX});
-          try {
+      try {
         const deleteRecipe = await recipeService.delete(recipe);
 
         navigation.popTo("RecipesScreen",{recipe_to_delete: recipe});
@@ -160,40 +130,29 @@ export default function RecipeScreen({ navigation, route }){
   const handleDurationChange = (value, index) => {
     switch (index) {
       case 1:
-        setDuration_minutes(value);
+        updateRecipe('duration_minutes', value);
         break; 
       default:
-        setDuration_hours(value);
+        updateRecipe('duration_hours', value);
         break;
     };
   };
 
-  const options = CONST.CATEGORIES.map((meal, index) => ({
-    id: index + 1,
-    label: meal.label,
-    value: meal.value,
-    color: colors.second
-  }));
-
-  const [name, setName] = useState(recipe.name);
-  const [duration_hours, setDuration_hours] = useState(recipe.duration_hours ?? 0);
-  const [duration_minutes, setDuration_minutes] = useState(recipe.duration_minutes ?? 0);
-  const [description, setDescription] = useState(recipe.description ?? "");
-  const [category, setCategory] = useState(!!recipe.category && recipe.category);
+  const options = Recipe.getCategoryOptions(colors.second);
 
  return (
     <View style={[GlobalStyles.container, RecipeStyles.container]}>
       <View style={RecipeStyles.radContainer}>
         <RadioGroup radioButtons={ options } 
-          onPress={setCategory} selectedId={category}
+          onPress={(value) => updateRecipe('category', value)} selectedId={recipe.category}
           layout='row' labelStyle={{color: colors.second}} 
         />
       </View>
       <InputRect placeholder="Name" 
-        value={name} 
+        value={recipe.name}
         style={[RecipeStyles.nameInput]}
-        onChangeText={(text) => {setName(text);
-        }}
+        maxLength={50}
+        onChangeText={(text) => updateRecipe('name', text)}
       />
   
       <View style={RecipeStyles.durationContainer}>
@@ -203,17 +162,18 @@ export default function RecipeScreen({ navigation, route }){
         <View style={{ flex: 1 }}>
           <PickerGenerator 
             onValueChange={handleDurationChange} 
-            ITEM_OPTIONS = {CONST.PICKER_OPTIONS} duration= {[duration_hours,duration_minutes]}/>
+            ITEM_OPTIONS = {CONST.PICKER_OPTIONS} duration= {[recipe.duration_hours ?? 0, recipe.duration_minutes ?? 0]}/>
         </View>
       
       </View>
 
       <InputRect  
         placeholder='Description' 
-        value= {description} 
+        value= {recipe.description}
         style={RecipeStyles.descripInput} 
         multiline={ true }
-        onChangeText={(text) => setDescription(text)} 
+        maxLength={300}
+        onChangeText={(text) => updateRecipe('description', text)}
       />
 
       {buttonSaveDelete()}

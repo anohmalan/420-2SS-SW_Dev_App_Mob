@@ -20,7 +20,7 @@ export default function RecipeItem({item}) {
       </View>
 
       <View style={{height: 'auto', flex:1}}>
-        <Text style={RecipesStyles.recipeName}>{ item.name }</Text>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={RecipesStyles.recipeName}>{ item.name }</Text>
       
         <Text numberOfLines={1} ellipsizeMode="tail" style={{fontSize: fontSizes.md, color: colors.textWhite }} >
           {item.description}

@@ -6,6 +6,7 @@ import { GlobalStyles } from "../styles/globalStyles";
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useState } from 'react';
 import * as React from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import RecipeItem from './RecipeItem';
 import { Toast } from 'toastify-react-native';
 import auth from '../../services/auth'
@@ -19,12 +20,10 @@ export default function RecipesScreen({ navigation, route }){
   const recipe = new RecipeService();
 
   // Charger les recettes d'un User
-  React.useEffect(() => {
-    loadRecipes();
-  }, []);
- 
-  const sortedRecipes = [...recipes].sort((a, b) =>
-    a.name.localeCompare(b.name)
+  useFocusEffect(
+    React.useCallback(() => {
+      loadRecipes();
+    }, [])
   );
 
   // Bouton Logout
@@ -40,27 +39,6 @@ export default function RecipesScreen({ navigation, route }){
       headerBackVisible: false,
     });
   },[]);
-
-  //Ajout ou Mise à jour d'une recette
-  React.useEffect(() => {
-    const recipe = params?.recipe;
-
-    if (recipe) {
-      const existRecipe = recipes.find(
-        (r) => r.id === Number(recipe.id)
-      );
-
-      if (existRecipe) {
-        setRecipes(
-          recipes.map((r) =>
-            r.id === Number(recipe.id) ? recipe : r
-          )
-        );
-      } else {
-        setRecipes([...recipes, recipe]);
-      }
-    }
-  }, [params?.recipe]);
 
   // Suppression d'un recette
   React.useEffect(() => {
@@ -98,17 +76,20 @@ export default function RecipesScreen({ navigation, route }){
     navigation.push("RecipeScreen");
   }
 
-  function list(sortedRecipes) {
+  function list() {
     return (
-      <View style={{width: "95%"}}>
-        <FlatList style={{ }}
+      <View style={{flex:1,width: "95%"}}>
+        <FlatList
           ListEmptyComponent={
-            <Text style={{ fontSize: fontSizes.xyz, color: colors.textWhite }}>
-              No recipes...
-            </Text>
+            <View style={RecipesStyles.flatListVide}>
+              <Text style={{fontSize: fontSizes.xyz, color: colors.textWhite }}>
+                No recipes...
+              </Text>
+            </View>
           }
-          ItemSeparatorComponent={ () => <View style={{ height: 2, backgroundColor: 'white' }}/> }
-          data={sortedRecipes}
+          contentContainerStyle={recipes.length == 0 && {flexGrow:1}}
+          ItemSeparatorComponent={ () => <View style={{ height: 2, backgroundColor: 'white',justifyContent: 'center' }}/> }
+          data={recipes}
 
           renderItem={({item}) => {
             return(
@@ -124,7 +105,7 @@ export default function RecipesScreen({ navigation, route }){
 
   return(
     <View style={[GlobalStyles.container,{justifyContent: 'flex-start', padding:0}]}>
-      {list(sortedRecipes)}
+      {list()}
       <ButtonHighlight onPress={handleAdd} 
         label={<FontAwesome6 name="add" size={iconSizes.xl} color="white" />} 
         styleText={{color: colors.move}} 

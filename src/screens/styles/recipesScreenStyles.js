@@ -51,5 +51,11 @@ export const RecipesStyles = StyleSheet.create({
     borderRadius: 999, 
     height: 70, 
     width: 70
+  },
+  flatListVide:{
+    flex: 1, 
+    alignItems:'center', 
+    justifyContent:'center', 
+    borderWidth:2
   }
 });
