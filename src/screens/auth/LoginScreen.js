@@ -21,10 +21,8 @@ export default function LoginScreen({ navigation }){
   async function handleLogin(){   
     const success = await auth.logIn(credentials);
 
-    setUser(auth.currentUser)
-    setCredentials(new UserCredentials({username: '', password: ''}))
     if(success){
-      console.log(auth.currentUser.id)
+      setCredentials(new UserCredentials({username: '', password: ''}))
       navigation.replace('RecipesScreen') 
     }else{
       Toast.error("Nom d'utilisateur ou mot de passe incorrect", 'bottom')

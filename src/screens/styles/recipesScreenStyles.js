@@ -56,6 +56,5 @@ export const RecipesStyles = StyleSheet.create({
     flex: 1, 
     alignItems:'center', 
     justifyContent:'center', 
-    borderWidth:2
   }
 });
