@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Alert,View } from 'react-native';
 import { useState } from 'react';
 import   RadioGroup from 'react-native-radio-buttons-group';
 import { TextComponent } from '../../components/TextComponent';
@@ -86,17 +86,37 @@ export default function RecipeScreen({ navigation, route }){
   }
 
 
-  async function handleDelete(){
-      try {
-        const deleteRecipe = await recipeService.delete(recipe);
+  function handleDelete() {
+    Alert.alert(
+      'Supprimer la recette',
+      'Êtes-vous sûr de vouloir supprimer cette recette ?',
+      [
+        { text: 'Annuler', style: 'cancel' },
+        {
+          text: 'Supprimer',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              const response = await recipeService.delete(recipe);
 
-        navigation.popTo("RecipesScreen",{recipe_to_delete: recipe});
+              if (!response.success) {
+                Toast.error('Impossible de supprimer la recette', 'bottom');
+                return;
+              }
 
-        Toast.success('Recette supprimée avec succès');
-      } catch (error) {
-        console.error(error);
-        Toast.error('Impossible de supprimer la recette', 'bottom');
-      }
+              navigation.popTo('RecipesScreen', {
+                recipe_to_delete: recipe,
+              });
+
+              Toast.success('Recette supprimée avec succès');
+            } catch (error) {
+              console.error(error);
+              Toast.error('Impossible de supprimer la recette', 'bottom');
+            }
+          },
+        },
+      ]
+    );
   }
   
   function buttonSaveDelete(){
@@ -140,7 +160,7 @@ export default function RecipeScreen({ navigation, route }){
 
   const options = Recipe.getCategoryOptions(colors.second);
 
- return (
+  return (
     <View style={[GlobalStyles.container, RecipeStyles.container]}>
       <View style={RecipeStyles.radContainer}>
         <RadioGroup radioButtons={ options } 
