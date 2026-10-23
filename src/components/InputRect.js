@@ -4,10 +4,10 @@ import { colors } from '../theme';
 export function InputRect({placeholder,style, ...otherProps}) {
     return (
         <TextInput
-            placeholder={placeholder}
-            style={[styles.input, style]}
-            placeholderTextColor={colors.textWhite}
-            {...otherProps}
+          placeholder={placeholder}
+          style={[styles.input, style]}
+          placeholderTextColor={colors.textWhite}
+          {...otherProps}
         />
     )
 }
